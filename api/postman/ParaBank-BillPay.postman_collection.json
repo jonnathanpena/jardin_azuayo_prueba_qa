@@ -1,0 +1,884 @@
+{
+  "info": {
+    "_postman_id": "4bc2eb4d-1fa2-5b0b-a761-8ba703eedcc7",
+    "name": "ParaBank - Pago de servicios básicos",
+    "description": "Pruebas de la API REST de ParaBank para el flujo Bill Pay. Las peticiones están encadenadas: ejecutar en orden (Collection Runner o Newman). Ver api/postman/README.md.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "01-preparacion",
+      "description": "Autenticación y creación de una cuenta CHECKING propia para no depender del saldo compartido de la demo.",
+      "item": [
+        {
+          "name": "Login con usuario válido",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Responde JSON', () => pm.response.to.be.json);",
+                  "const customer = pm.response.json();",
+                  "pm.test('Devuelve el cliente con id y nombre', () => {",
+                  "  pm.expect(customer.id).to.be.a('number');",
+                  "  pm.expect(customer.firstName).to.be.a('string').and.not.empty;",
+                  "});",
+                  "pm.collectionVariables.set('customerId', customer.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{apiUrl}}/login/{{username}}/{{password}}",
+              "host": ["{{apiUrl}}"],
+              "path": ["login", "{{username}}", "{{password}}"]
+            },
+            "description": "CP-001 (API). Guarda customerId para el resto de la colección."
+          }
+        },
+        {
+          "name": "Listar cuentas del cliente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const accounts = pm.response.json();",
+                  "pm.test('El cliente tiene al menos una cuenta', () => pm.expect(accounts).to.be.an('array').that.is.not.empty);",
+                  "pm.test('Todas las cuentas pertenecen al cliente', () => {",
+                  "  accounts.forEach((a) => pm.expect(a.customerId).to.eql(Number(pm.collectionVariables.get('customerId'))));",
+                  "});",
+                  "pm.collectionVariables.set('sourceAccountId', accounts[0].id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{apiUrl}}/customers/{{customerId}}/accounts",
+              "host": ["{{apiUrl}}"],
+              "path": ["customers", "{{customerId}}", "accounts"]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Crear cuenta de pago (CHECKING)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const account = pm.response.json();",
+                  "pm.test('Se crea una cuenta CHECKING del cliente', () => {",
+                  "  pm.expect(account.type).to.eql('CHECKING');",
+                  "  pm.expect(account.customerId).to.eql(Number(pm.collectionVariables.get('customerId')));",
+                  "});",
+                  "pm.collectionVariables.set('paymentAccountId', account.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{apiUrl}}/createAccount?customerId={{customerId}}&newAccountType=0&fromAccountId={{sourceAccountId}}",
+              "host": ["{{apiUrl}}"],
+              "path": ["createAccount"],
+              "query": [
+                {
+                  "key": "customerId",
+                  "value": "{{customerId}}"
+                },
+                {
+                  "key": "newAccountType",
+                  "value": "0"
+                },
+                {
+                  "key": "fromAccountId",
+                  "value": "{{sourceAccountId}}"
+                }
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Consultar saldo inicial de la cuenta de pago",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const account = pm.response.json();",
+                  "pm.test('La cuenta tiene saldo positivo para pagar', () => pm.expect(account.balance).to.be.above(0));",
+                  "pm.collectionVariables.set('balanceBeforeCents', Math.round(account.balance * 100));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{apiUrl}}/accounts/{{paymentAccountId}}",
+              "host": ["{{apiUrl}}"],
+              "path": ["accounts", "{{paymentAccountId}}"]
+            },
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "02-pago-servicios-positivos",
+      "item": [
+        {
+          "name": "Pagar servicio básico (monto válido)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const suffix = Date.now().toString(36).toUpperCase();",
+                  "pm.collectionVariables.set('payeeName', `Empresa Electrica Quito ${suffix}`);"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const amount = Number(pm.collectionVariables.get('billAmount'));",
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Tiempo de respuesta < 3 s', () => pm.expect(pm.response.responseTime).to.be.below(3000));",
+                  "const result = pm.response.json();",
+                  "pm.test('Confirma beneficiario, monto y cuenta origen', () => {",
+                  "  pm.expect(result.payeeName).to.eql(pm.collectionVariables.get('payeeName'));",
+                  "  pm.expect(result.amount).to.eql(amount);",
+                  "  pm.expect(result.accountId).to.eql(Number(pm.collectionVariables.get('paymentAccountId')));",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{apiUrl}}/billpay?accountId={{paymentAccountId}}&amount={{billAmount}}",
+              "host": ["{{apiUrl}}"],
+              "path": ["billpay"],
+              "query": [
+                {
+                  "key": "accountId",
+                  "value": "{{paymentAccountId}}"
+                },
+                {
+                  "key": "amount",
+                  "value": "{{billAmount}}"
+                }
+              ]
+            },
+            "description": "CP-002 (API). AC-02, AC-03.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{payeeName}}\",\n  \"address\": {\n    \"street\": \"Av. 10 de Agosto N25-15\",\n    \"city\": \"Quito\",\n    \"state\": \"Pichincha\",\n    \"zipCode\": \"170143\"\n  },\n  \"phoneNumber\": \"022396500\",\n  \"accountNumber\": \"78451236\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Verificar saldo descontado",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const before = Number(pm.collectionVariables.get('balanceBeforeCents'));",
+                  "const amountCents = Math.round(Number(pm.collectionVariables.get('billAmount')) * 100);",
+                  "pm.test('El saldo baja exactamente el monto pagado', () => {",
+                  "  pm.expect(Math.round(pm.response.json().balance * 100)).to.eql(before - amountCents);",
+                  "});",
+                  "pm.collectionVariables.set('balanceBeforeCents', Math.round(pm.response.json().balance * 100));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{apiUrl}}/accounts/{{paymentAccountId}}",
+              "host": ["{{apiUrl}}"],
+              "path": ["accounts", "{{paymentAccountId}}"]
+            },
+            "description": "CP-003 (API). AC-04."
+          }
+        },
+        {
+          "name": "Verificar débito en el historial",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const expected = `Bill Payment to ${pm.collectionVariables.get('payeeName')}`;",
+                  "const matches = pm.response.json().filter((t) => t.description === expected);",
+                  "pm.test('Existe un único movimiento del pago', () => pm.expect(matches).to.have.lengthOf(1));",
+                  "pm.test('El movimiento es un débito por el monto pagado', () => {",
+                  "  pm.expect(matches[0].type).to.eql('Debit');",
+                  "  pm.expect(matches[0].amount).to.eql(Number(pm.collectionVariables.get('billAmount')));",
+                  "});",
+                  "pm.collectionVariables.set('transactionId', matches[0] && matches[0].id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{apiUrl}}/accounts/{{paymentAccountId}}/transactions",
+              "host": ["{{apiUrl}}"],
+              "path": ["accounts", "{{paymentAccountId}}", "transactions"]
+            },
+            "description": "CP-003 (API). AC-04."
+          }
+        },
+        {
+          "name": "Buscar el pago por monto",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const ids = pm.response.json().map((t) => t.id);",
+                  "pm.test('La búsqueda por monto devuelve el movimiento del pago', () => {",
+                  "  pm.expect(ids).to.include(Number(pm.collectionVariables.get('transactionId')));",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{apiUrl}}/accounts/{{paymentAccountId}}/transactions/amount/{{billAmount}}",
+              "host": ["{{apiUrl}}"],
+              "path": ["accounts", "{{paymentAccountId}}", "transactions", "amount", "{{billAmount}}"]
+            },
+            "description": "CP-017 (API)."
+          }
+        },
+        {
+          "name": "Consultar el movimiento por id",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const t = pm.response.json();",
+                  "pm.test('El detalle del movimiento coincide con el pago', () => {",
+                  "  pm.expect(t.accountId).to.eql(Number(pm.collectionVariables.get('paymentAccountId')));",
+                  "  pm.expect(t.description).to.eql(`Bill Payment to ${pm.collectionVariables.get('payeeName')}`);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{apiUrl}}/transactions/{{transactionId}}",
+              "host": ["{{apiUrl}}"],
+              "path": ["transactions", "{{transactionId}}"]
+            },
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "03-pago-servicios-negativos",
+      "item": [
+        {
+          "name": "Login con contraseña incorrecta",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('El servicio rechaza la operación (HTTP 4xx/5xx)', () => {",
+                  "  pm.expect(pm.response.code).to.be.at.least(400);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{apiUrl}}/login/{{username}}/clave-incorrecta",
+              "host": ["{{apiUrl}}"],
+              "path": ["login", "{{username}}", "clave-incorrecta"]
+            },
+            "description": "CP-005 (API)."
+          }
+        },
+        {
+          "name": "Pagar desde una cuenta inexistente",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const suffix = Date.now().toString(36).toUpperCase();",
+                  "pm.collectionVariables.set('payeeName', `Empresa Electrica Quito ${suffix}`);"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('El servicio rechaza la operación (HTTP 4xx/5xx)', () => {",
+                  "  pm.expect(pm.response.code).to.be.at.least(400);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{apiUrl}}/billpay?accountId=999999999&amount=10.00",
+              "host": ["{{apiUrl}}"],
+              "path": ["billpay"],
+              "query": [
+                {
+                  "key": "accountId",
+                  "value": "999999999"
+                },
+                {
+                  "key": "amount",
+                  "value": "10.00"
+                }
+              ]
+            },
+            "description": "CP-013 (API).",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{payeeName}}\",\n  \"address\": {\n    \"street\": \"Av. 10 de Agosto N25-15\",\n    \"city\": \"Quito\",\n    \"state\": \"Pichincha\",\n    \"zipCode\": \"170143\"\n  },\n  \"phoneNumber\": \"022396500\",\n  \"accountNumber\": \"78451236\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Pagar con monto no numérico",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const suffix = Date.now().toString(36).toUpperCase();",
+                  "pm.collectionVariables.set('payeeName', `Empresa Electrica Quito ${suffix}`);",
+                  "",
+                  "pm.sendRequest({",
+                  "  url: `${pm.variables.get('apiUrl')}/accounts/${pm.collectionVariables.get('paymentAccountId')}`,",
+                  "  header: { Accept: 'application/json' },",
+                  "}, (err, res) => {",
+                  "  if (!err) pm.collectionVariables.set('balanceBeforeCents', Math.round(res.json().balance * 100));",
+                  "});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('El servicio rechaza la operación (HTTP 4xx/5xx)', () => {",
+                  "  pm.expect(pm.response.code).to.be.at.least(400);",
+                  "});",
+                  "",
+                  "// pm.test va dentro del callback: si fallara dentro de un sendRequest anidado, Newman perdería el resultado.",
+                  "pm.sendRequest({",
+                  "  url: `${pm.variables.get('apiUrl')}/accounts/${pm.collectionVariables.get('paymentAccountId')}`,",
+                  "  header: { Accept: 'application/json' },",
+                  "}, (err, res) => {",
+                  "  pm.test('El saldo de la cuenta no cambia', () => {",
+                  "    pm.expect(err, 'consulta del saldo').to.equal(null);",
+                  "    const before = Number(pm.collectionVariables.get('balanceBeforeCents'));",
+                  "    const after = Math.round(res.json().balance * 100);",
+                  "    pm.expect(after, `saldo antes ${before / 100}, después ${after / 100}`).to.eql(before);",
+                  "  });",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{apiUrl}}/billpay?accountId={{paymentAccountId}}&amount=10abc",
+              "host": ["{{apiUrl}}"],
+              "path": ["billpay"],
+              "query": [
+                {
+                  "key": "accountId",
+                  "value": "{{paymentAccountId}}"
+                },
+                {
+                  "key": "amount",
+                  "value": "10abc"
+                }
+              ]
+            },
+            "description": "CP-020 (API).",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{payeeName}}\",\n  \"address\": {\n    \"street\": \"Av. 10 de Agosto N25-15\",\n    \"city\": \"Quito\",\n    \"state\": \"Pichincha\",\n    \"zipCode\": \"170143\"\n  },\n  \"phoneNumber\": \"022396500\",\n  \"accountNumber\": \"78451236\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "04-defectos-conocidos",
+      "description": "Reglas de aceptación que ParaBank no cumple, confirmadas en ejecución (DEF-001, DEF-002, DEF-003). Validan el comportamiento esperado, por eso fallan mientras el defecto exista; se ejecutan aparte con npm run test:postman:defects.",
+      "item": [
+        {
+          "name": "Rechazar pago con monto cero",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const suffix = Date.now().toString(36).toUpperCase();",
+                  "pm.collectionVariables.set('payeeName', `Empresa Electrica Quito ${suffix}`);",
+                  "",
+                  "pm.sendRequest({",
+                  "  url: `${pm.variables.get('apiUrl')}/accounts/${pm.collectionVariables.get('paymentAccountId')}`,",
+                  "  header: { Accept: 'application/json' },",
+                  "}, (err, res) => {",
+                  "  if (!err) pm.collectionVariables.set('balanceBeforeCents', Math.round(res.json().balance * 100));",
+                  "});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('El servicio rechaza la operación (HTTP 4xx/5xx)', () => {",
+                  "  pm.expect(pm.response.code).to.be.at.least(400);",
+                  "});",
+                  "",
+                  "// pm.test va dentro del callback: si fallara dentro de un sendRequest anidado, Newman perdería el resultado.",
+                  "pm.sendRequest({",
+                  "  url: `${pm.variables.get('apiUrl')}/accounts/${pm.collectionVariables.get('paymentAccountId')}`,",
+                  "  header: { Accept: 'application/json' },",
+                  "}, (err, res) => {",
+                  "  pm.test('El saldo de la cuenta no cambia', () => {",
+                  "    pm.expect(err, 'consulta del saldo').to.equal(null);",
+                  "    const before = Number(pm.collectionVariables.get('balanceBeforeCents'));",
+                  "    const after = Math.round(res.json().balance * 100);",
+                  "    pm.expect(after, `saldo antes ${before / 100}, después ${after / 100}`).to.eql(before);",
+                  "  });",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{apiUrl}}/billpay?accountId={{paymentAccountId}}&amount=0",
+              "host": ["{{apiUrl}}"],
+              "path": ["billpay"],
+              "query": [
+                {
+                  "key": "accountId",
+                  "value": "{{paymentAccountId}}"
+                },
+                {
+                  "key": "amount",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "CP-010 / DEF-001.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{payeeName}}\",\n  \"address\": {\n    \"street\": \"Av. 10 de Agosto N25-15\",\n    \"city\": \"Quito\",\n    \"state\": \"Pichincha\",\n    \"zipCode\": \"170143\"\n  },\n  \"phoneNumber\": \"022396500\",\n  \"accountNumber\": \"78451236\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Rechazar pago con monto negativo",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const suffix = Date.now().toString(36).toUpperCase();",
+                  "pm.collectionVariables.set('payeeName', `Empresa Electrica Quito ${suffix}`);",
+                  "",
+                  "pm.sendRequest({",
+                  "  url: `${pm.variables.get('apiUrl')}/accounts/${pm.collectionVariables.get('paymentAccountId')}`,",
+                  "  header: { Accept: 'application/json' },",
+                  "}, (err, res) => {",
+                  "  if (!err) pm.collectionVariables.set('balanceBeforeCents', Math.round(res.json().balance * 100));",
+                  "});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('El servicio rechaza la operación (HTTP 4xx/5xx)', () => {",
+                  "  pm.expect(pm.response.code).to.be.at.least(400);",
+                  "});",
+                  "",
+                  "// pm.test va dentro del callback: si fallara dentro de un sendRequest anidado, Newman perdería el resultado.",
+                  "pm.sendRequest({",
+                  "  url: `${pm.variables.get('apiUrl')}/accounts/${pm.collectionVariables.get('paymentAccountId')}`,",
+                  "  header: { Accept: 'application/json' },",
+                  "}, (err, res) => {",
+                  "  pm.test('El saldo de la cuenta no cambia', () => {",
+                  "    pm.expect(err, 'consulta del saldo').to.equal(null);",
+                  "    const before = Number(pm.collectionVariables.get('balanceBeforeCents'));",
+                  "    const after = Math.round(res.json().balance * 100);",
+                  "    pm.expect(after, `saldo antes ${before / 100}, después ${after / 100}`).to.eql(before);",
+                  "  });",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{apiUrl}}/billpay?accountId={{paymentAccountId}}&amount=-50.00",
+              "host": ["{{apiUrl}}"],
+              "path": ["billpay"],
+              "query": [
+                {
+                  "key": "accountId",
+                  "value": "{{paymentAccountId}}"
+                },
+                {
+                  "key": "amount",
+                  "value": "-50.00"
+                }
+              ]
+            },
+            "description": "CP-011 / DEF-001.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{payeeName}}\",\n  \"address\": {\n    \"street\": \"Av. 10 de Agosto N25-15\",\n    \"city\": \"Quito\",\n    \"state\": \"Pichincha\",\n    \"zipCode\": \"170143\"\n  },\n  \"phoneNumber\": \"022396500\",\n  \"accountNumber\": \"78451236\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Rechazar pago que supera el saldo",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const suffix = Date.now().toString(36).toUpperCase();",
+                  "pm.collectionVariables.set('payeeName', `Empresa Electrica Quito ${suffix}`);",
+                  "",
+                  "pm.sendRequest({",
+                  "  url: `${pm.variables.get('apiUrl')}/accounts/${pm.collectionVariables.get('paymentAccountId')}`,",
+                  "  header: { Accept: 'application/json' },",
+                  "}, (err, res) => {",
+                  "  if (!err) pm.collectionVariables.set('balanceBeforeCents', Math.round(res.json().balance * 100));",
+                  "});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('El servicio rechaza la operación (HTTP 4xx/5xx)', () => {",
+                  "  pm.expect(pm.response.code).to.be.at.least(400);",
+                  "});",
+                  "",
+                  "// pm.test va dentro del callback: si fallara dentro de un sendRequest anidado, Newman perdería el resultado.",
+                  "pm.sendRequest({",
+                  "  url: `${pm.variables.get('apiUrl')}/accounts/${pm.collectionVariables.get('paymentAccountId')}`,",
+                  "  header: { Accept: 'application/json' },",
+                  "}, (err, res) => {",
+                  "  pm.test('El saldo de la cuenta no cambia', () => {",
+                  "    pm.expect(err, 'consulta del saldo').to.equal(null);",
+                  "    const before = Number(pm.collectionVariables.get('balanceBeforeCents'));",
+                  "    const after = Math.round(res.json().balance * 100);",
+                  "    pm.expect(after, `saldo antes ${before / 100}, después ${after / 100}`).to.eql(before);",
+                  "  });",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{apiUrl}}/billpay?accountId={{paymentAccountId}}&amount=999999.00",
+              "host": ["{{apiUrl}}"],
+              "path": ["billpay"],
+              "query": [
+                {
+                  "key": "accountId",
+                  "value": "{{paymentAccountId}}"
+                },
+                {
+                  "key": "amount",
+                  "value": "999999.00"
+                }
+              ]
+            },
+            "description": "CP-012 / DEF-002.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{payeeName}}\",\n  \"address\": {\n    \"street\": \"Av. 10 de Agosto N25-15\",\n    \"city\": \"Quito\",\n    \"state\": \"Pichincha\",\n    \"zipCode\": \"170143\"\n  },\n  \"phoneNumber\": \"022396500\",\n  \"accountNumber\": \"78451236\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Consultar cuentas sin autenticación",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('El servicio exige autenticación (401/403)', () => {",
+                  "  pm.expect(pm.response.code).to.be.oneOf([401, 403]);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{apiUrl}}/customers/{{customerId}}/accounts",
+              "host": ["{{apiUrl}}"],
+              "path": ["customers", "{{customerId}}", "accounts"]
+            },
+            "description": "CP-021 / DEF-003."
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "billAmount",
+      "value": "25.75"
+    },
+    {
+      "key": "payeeName",
+      "value": ""
+    },
+    {
+      "key": "customerId",
+      "value": ""
+    },
+    {
+      "key": "sourceAccountId",
+      "value": ""
+    },
+    {
+      "key": "paymentAccountId",
+      "value": ""
+    },
+    {
+      "key": "balanceBeforeCents",
+      "value": ""
+    },
+    {
+      "key": "transactionId",
+      "value": ""
+    }
+  ]
+}

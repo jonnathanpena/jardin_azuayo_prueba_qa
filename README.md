@@ -1,2 +1,128 @@
-# jardin_azuayo_prueba_qa
-Prueba de automatización para Jardín Azuayo
+# Prueba técnica QA Automation - ParaBank
+
+[![QA Pipeline](https://github.com/jonnathanpena/jardin_azuayo_prueba_qa/actions/workflows/qa-pipeline.yml/badge.svg)](https://github.com/jonnathanpena/jardin_azuayo_prueba_qa/actions/workflows/qa-pipeline.yml)
+
+Solución de la prueba técnica de QA Automation sobre [ParaBank](https://parabank.parasoft.com/parabank/index.htm),
+con el caso de pago de servicios desde la banca web.
+
+## Qué se hizo
+
+| Parte | Estado | Dónde |
+| --- | --- | --- |
+| A. Casos de prueba | Completa (21 casos) | [`casos/`](casos/README.md) y [CSV](casos/casos-de-prueba.csv) |
+| B. Automatización web | Completa, Playwright + TypeScript | [`web/`](web) |
+| C. Pruebas API | Completa, Playwright y colección Postman | [`api/`](api) |
+| D. Pipeline | Completo, GitHub Actions | [`.github/workflows/qa-pipeline.yml`](.github/workflows/qa-pipeline.yml), [notas](pipeline/README.md) |
+| E. Evidencias y defectos | Completa | [`evidencias/`](evidencias) |
+| F. Plan JMeter | Parcial: plan armado y validado, sin carga real | [`performance/`](performance/README.md) |
+| G. Automatización mobile | Parcial: solo documentación | [`mobile/`](mobile/estrategia-automatizacion-mobile.md) |
+
+## Requisitos
+
+- Node.js 22.12 o superior (ver `.nvmrc`)
+- Git
+- Opcional: Java 17 y Apache JMeter 5.6.x para el plan de rendimiento, y Postman para abrir la colección
+
+## Instalación
+
+```bash
+git clone https://github.com/jonnathanpena/jardin_azuayo_prueba_qa.git
+cd jardin_azuayo_prueba_qa
+npm ci
+npx playwright install --with-deps chromium
+cp .env.example .env
+```
+
+El `.env` es opcional, los valores por defecto apuntan a la demo pública.
+
+## Cómo ejecutar
+
+| Qué | Comando |
+| --- | --- |
+| Todas las pruebas (sin los defectos conocidos) | `npm test` |
+| Web en escritorio | `npm run test:web` |
+| Web en viewport móvil (Pixel 7) | `npm run test:mobile-web` |
+| API con Playwright | `npm run test:api` |
+| Smoke / regresión | `npm run test:smoke` / `npm run test:regression` |
+| Defectos conocidos (fallan mientras el defecto exista) | `npm run test:defects` |
+| Postman con Newman | `npm run test:postman` / `npm run test:postman:defects` |
+| Reporte HTML | `npm run report` |
+| Validar el plan JMeter | `npm run jmx:validate` |
+| Lint, tipos y formato | `npm run lint`, `npm run typecheck`, `npm run format:check` |
+
+Variables del `.env`:
+
+| Variable | Por defecto |
+| --- | --- |
+| `PARABANK_BASE_URL` | `https://parabank.parasoft.com/parabank/` |
+| `PARABANK_USERNAME` / `PARABANK_PASSWORD` | `john` / `demo` |
+| `PARABANK_USER_PREFIX` | `qa` |
+
+## Estructura
+
+```text
+.github/       workflow de GitHub Actions y plantillas
+api/           cliente REST, fixtures, pruebas y colección Postman
+web/           page objects, fixtures y pruebas web
+shared/        configuración, datos y utilidades comunes
+casos/         casos de prueba
+evidencias/    reporte de ejecución, defectos y capturas
+performance/   plan JMeter y análisis
+mobile/        estrategia mobile
+pipeline/      notas del pipeline
+docs/          arquitectura
+scripts/       utilidades para el resumen del CI
+```
+
+## Decisiones
+
+- Playwright para web y API, así comparten reporte, etiquetas y fixtures.
+- Cada worker registra su propio socio y cada prueba API abre una cuenta nueva. La demo es pública y otras personas
+  cambian los datos de `john/demo`.
+- Además de la confirmación del pago, se verifica el débito y el saldo (en centavos).
+- Los defectos están como pruebas `@known-defect`. Validan el comportamiento correcto, fallan mientras el defecto
+  exista y corren en un job aparte que no bloquea el pipeline.
+- No se ejecutó carga contra la demo pública.
+
+Más detalle en [`docs/arquitectura.md`](docs/arquitectura.md).
+
+## Resultados
+
+| Suite | Resultado |
+| --- | --- |
+| Web (Chromium 1366x768 y Pixel 7) | 28 de 28 |
+| API con Playwright | 8 de 8 |
+| Postman / Newman | 25 de 25 aserciones |
+| Defectos conocidos | 12 verificaciones fallan y confirman 3 defectos |
+
+El detalle está en [`evidencias/reporte-ejecucion.md`](evidencias/reporte-ejecucion.md) y los defectos en
+[`evidencias/defectos.md`](evidencias/defectos.md):
+
+| ID | Defecto | Severidad |
+| --- | --- | --- |
+| DEF-001 | Se aceptan pagos con monto cero o negativo, y el negativo aumenta el saldo | Crítica |
+| DEF-002 | Se aceptan pagos mayores al saldo (sobregiro) | Alta |
+| DEF-003 | La API REST entrega datos de cuentas sin autenticación | Crítica |
+
+## Lo que no se ejecutó
+
+- **Carga con JMeter**: el enunciado lo prohíbe. Solo se validó el plan de forma estática. El
+  análisis usa los datos simulados del enunciado.
+- **App nativa**: ParaBank no tiene app, así que la parte mobile es una guía con Appium y la ejecución real fue
+  emulando un Pixel 7 en el navegador.
+- **CP-018 (doble clic en Send Payment)** y **CP-019 (pago desde otra cuenta)**: quedan manuales. El primero depende de
+  la red y el segundo aporta poco frente a CP-002.
+
+## Obstáculos
+
+- La demo pública es compartida y se reinicia, y los saldos de `john/demo` cambian solos. Por eso se usan datos propios
+  y 1 reintento en CI (0 en las pruebas de defectos).
+- El campo teléfono de Bill Pay cambia de `id` y `class` en cada carga, así que se ubica por el atributo `name`.
+- En la primera corrida fallaron 15 de 28 pruebas web porque un localizador encontraba varios elementos ocultos y
+  Playwright lo rechazaba en modo estricto. Era un error de la prueba, no de la aplicación; se corrigió filtrando
+  solo los elementos visibles.
+- Solo se prueba en Chromium.
+
+## Autor
+
+Jonnathan Peña - [@jonnathanpena](https://github.com/jonnathanpena)

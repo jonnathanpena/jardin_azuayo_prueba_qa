@@ -1,0 +1,30 @@
+# Dependencias
+node_modules/
+
+# Variables de entorno locales
+.env
+.env.*
+!.env.example
+
+# Estado de sesión generado por las pruebas (cookies de ParaBank)
+.auth/
+
+# Artefactos de ejecución (se publican como artifacts en CI)
+test-results/
+reports/
+blob-report/
+playwright/.cache/
+
+# JMeter: resultados locales (solo se versiona la carpeta)
+performance/results/*
+!performance/results/.gitkeep
+jmeter.log
+
+# IDE / SO
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+.DS_Store
+Thumbs.db
+*.log

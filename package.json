@@ -1,0 +1,45 @@
+{
+  "name": "parabank-qa-automation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pruebas automatizadas (web, API, rendimiento) sobre ParaBank - flujo de pago de servicios",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "test": "playwright test --grep-invert @known-defect",
+    "test:web": "playwright test --project=web-chromium --grep-invert @known-defect",
+    "test:api": "playwright test --project=api --grep-invert @known-defect",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:regression": "playwright test --grep @regression",
+    "test:headed": "playwright test --project=web-chromium --headed",
+    "test:postman": "newman run api/postman/ParaBank-BillPay.postman_collection.json -e api/postman/ParaBank.postman_environment.json --folder 01-preparacion --folder 02-pago-servicios-positivos --folder 03-pago-servicios-negativos -r cli,htmlextra,junit --reporter-htmlextra-export reports/newman/newman-report.html --reporter-junit-export reports/newman/newman-results.xml",
+    "report": "playwright show-report reports/playwright-html",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit",
+    "jmx:validate": "node performance/scripts/validate-jmx.mjs",
+    "test:all": "playwright test",
+    "test:defects": "playwright test --grep @known-defect --retries=0",
+    "test:mobile-web": "playwright test --project=web-mobile --grep @mobile",
+    "ci:summary": "node scripts/junit-summary.mjs",
+    "ci:defects": "node scripts/defects-report.mjs",
+    "test:postman:defects": "newman run api/postman/ParaBank-BillPay.postman_collection.json -e api/postman/ParaBank.postman_environment.json --folder 01-preparacion --folder 04-defectos-conocidos -r cli,htmlextra,junit --reporter-htmlextra-export reports/newman/newman-defects.html --reporter-junit-export reports/newman/newman-defects.xml"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.65.0",
+    "@types/node": "^26.6.6",
+    "dotenv": "^18.0.10",
+    "eslint": "^10.14.0",
+    "eslint-plugin-playwright": "^2.12.2",
+    "fast-xml-parser": "^5.12.1",
+    "newman": "^6.2.3",
+    "newman-reporter-htmlextra": "^1.23.1",
+    "prettier": "^3.10.1",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.72.2"
+  }
+}
