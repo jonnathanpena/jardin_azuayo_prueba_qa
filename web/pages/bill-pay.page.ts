@@ -42,6 +42,7 @@ export class BillPayPage extends BasePage {
   async fillForm(payment: BillPayment, fromAccountId?: string): Promise<void> {
     const { payee } = payment;
     // El formulario carga sus datos por AJAX y, si se envía antes de terminar, el clic no hace nada.
+    // eslint-disable-next-line playwright/no-networkidle -- no hay otra señal fiable de que el formulario esté listo
     await this.page.waitForLoadState('networkidle');
     await this.input('payee.name').fill(payee.name);
     await this.input('payee.address.street').fill(payee.address.street);
