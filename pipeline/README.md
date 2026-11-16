@@ -2,6 +2,8 @@
 
 Workflow: [`.github/workflows/qa-pipeline.yml`](../.github/workflows/qa-pipeline.yml)
 
+Run de referencia: [43981169957](https://github.com/jonnathanpena/jardin_azuayo_prueba_qa/actions/runs/43981169957) (calidad, web, API y Postman en verde; defectos conocidos en rojo por diseño).
+
 ## Cuándo corre
 
 - En cada `pull_request` y en cada `push` a `main`.

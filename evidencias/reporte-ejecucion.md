@@ -1,7 +1,7 @@
 # Reporte de ejecución
 
 Resultados contra la demo pública de ParaBank el 16/11/2026. Los números salen de los JUnit guardados en
-[`reportes/junit/`](reportes/junit) (ejecución local sin reintentos) y del primer run del workflow
+[`reportes/junit/`](reportes/junit) (ejecución local sin reintentos) y del workflow
 [`qa-pipeline.yml`](../.github/workflows/qa-pipeline.yml). No hay datos simulados; el análisis de rendimiento con datos
 del enunciado está en [`performance/`](../performance/analisis-datos-simulados.md).
 
@@ -20,22 +20,29 @@ comportamiento correcto y confirman 5 defectos (ver [`defectos.md`](defectos.md)
 pasan en esa carpeta son la preparación de datos y el saldo sin cambios en el pago de monto 0. CP-018 y CP-019 son
 manuales y no se ejecutaron.
 
-## Primer run en GitHub Actions
+## Run de referencia en GitHub Actions
 
-Run [43969231133](https://github.com/jonnathanpena/jardin_azuayo_prueba_qa/actions/runs/43969231133), commit `483052a`.
+Run [43981169957](https://github.com/jonnathanpena/jardin_azuayo_prueba_qa/actions/runs/43981169957), commit `4e005f7`. Sus totales coinciden con los de la tabla anterior.
 
 | Job | Resultado | Duración |
 | --- | --- | --- |
-| Calidad de código | OK | 59 s |
-| Pruebas web | Falló: 5 pruebas, 23 pasaron | 1 min 44 s |
-| Pruebas API (Playwright) | OK, 8/8 | 19 s |
-| Pruebas API (Postman) | OK, 25/25 aserciones | 18 s |
-| Defectos conocidos | Falla por diseño: 6 pruebas de Playwright y 6 aserciones de Postman | 1 min 44 s |
-| Resumen | OK | 12 s |
+| Calidad de código | OK | 22 s |
+| Pruebas web | OK, 23/23 | 53 s |
+| Pruebas API (Playwright) | OK, 8/8 | 18 s |
+| Pruebas API (Postman) | OK, 25/25 aserciones | 21 s |
+| Defectos conocidos | Falla por diseño: 11 pruebas de Playwright y 6 aserciones de Postman | 1 min 32 s |
+| Resumen | OK | 16 s |
 
-Las 5 pruebas web que fallaron (CP-003, CP-004, CP-015 y las dos variantes de CP-005) se reprodujeron igual en local y
-en la demo con curl: es comportamiento de la aplicación, son los defectos DEF-004 y DEF-005. Se pasaron a la suite
-`@known-defect`, que corre en un job aparte que no bloquea el pipeline.
+El job de defectos no bloquea el workflow (`continue-on-error`), pero conserva su marca de fallo y publica en el resumen
+los 5 defectos como confirmados.
+
+## Historial de los primeros runs
+
+| Run | Resultado | Motivo |
+| --- | --- | --- |
+| [43969231133](https://github.com/jonnathanpena/jardin_azuayo_prueba_qa/actions/runs/43969231133) | Falló en web | 5 pruebas web fallaron (CP-003, CP-004, CP-015 y dos variantes de CP-005). Se reprodujeron a mano contra la demo: es comportamiento de la aplicación, son DEF-004 y DEF-005. Pasaron a `@known-defect` |
+| [43980352376](https://github.com/jonnathanpena/jardin_azuayo_prueba_qa/actions/runs/43980352376) | Falló en lint | La regla `playwright/no-networkidle` rechazó la espera agregada para estabilizar CP-002. Se corrigió con una excepción puntual y justificada |
+| [43981169957](https://github.com/jonnathanpena/jardin_azuayo_prueba_qa/actions/runs/43981169957) | OK | Run de referencia |
 
 ## Detalle por caso
 

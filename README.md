@@ -12,10 +12,18 @@ con el caso de pago de servicios desde la banca web.
 | A. Casos de prueba | Completa (21 casos) | [`casos/`](casos/README.md) y [CSV](casos/casos-de-prueba.csv) |
 | B. Automatización web | Completa, Playwright + TypeScript | [`web/`](web) |
 | C. Pruebas API | Completa, Playwright y colección Postman | [`api/`](api) |
-| D. Pipeline | Completo, GitHub Actions | [`.github/workflows/qa-pipeline.yml`](.github/workflows/qa-pipeline.yml), [notas](pipeline/README.md) |
-| E. Evidencias y defectos | Completa | [`evidencias/`](evidencias) |
-| F. Plan JMeter | Parcial: plan armado y validado, sin carga real | [`performance/`](performance/README.md) |
-| G. Automatización mobile | Parcial: solo documentación | [`mobile/`](mobile/estrategia-automatizacion-mobile.md) |
+| D. Pipeline | Completo, GitHub Actions ([run de referencia](https://github.com/jonnathanpena/jardin_azuayo_prueba_qa/actions/runs/43981169957)) | [`.github/workflows/qa-pipeline.yml`](.github/workflows/qa-pipeline.yml), [notas](pipeline/README.md) |
+| E. Evidencias y defectos | Completa, 5 defectos documentados | [reporte](evidencias/reporte-ejecucion.md) y [defectos](evidencias/defectos.md) |
+| F. Plan JMeter | Completa: plan listo para un entorno autorizado, sin ejecutar carga como pide el enunciado | [`performance/`](performance/README.md) |
+| G. Automatización mobile | Completa como guía (Appium); no se ejecutó porque ParaBank no tiene app nativa | [`mobile/`](mobile/estrategia-automatizacion-mobile.md) |
+
+## Pipeline
+
+El workflow corre en cada push, en cada pull request, de lunes a viernes y bajo demanda. El run de referencia es
+[43981169957](https://github.com/jonnathanpena/jardin_azuayo_prueba_qa/actions/runs/43981169957): calidad de código, web, API y Postman en verde. El único job que falla es *Verificación de
+defectos conocidos*, a propósito: ahí están las pruebas de los defectos abiertos de ParaBank, y el job no bloquea para
+que esos fallos se vean sin ocultarlos. El resumen del run y los artefactos (`reportes-web`, `reportes-api`,
+`reportes-postman`, `reportes-defectos`) están en la página del run.
 
 ## Requisitos
 
