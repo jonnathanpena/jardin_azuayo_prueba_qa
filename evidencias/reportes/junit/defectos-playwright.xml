@@ -1,6 +1,209 @@
-<testsuites id="" name="" tests="6" failures="6" skipped="0" errors="0" time="30.013105">
-<testsuite name="web/tests/bill-pay-regression.spec.ts" timestamp="2026-11-13T21:22:39.002Z" hostname="web-chromium" tests="2" failures="2" skipped="0" time="23.297" errors="0">
-<testcase name="Pago de servicios — reglas de negocio del monto › CP-010 Rechazar un pago con monto cero (0)" classname="web/tests/bill-pay-regression.spec.ts" time="11.769">
+<testsuites id="" name="" tests="11" failures="11" skipped="0" errors="0" time="104.935382">
+<testsuite name="web/tests/auth.spec.ts" timestamp="2026-11-16T23:05:48.698Z" hostname="web-chromium" tests="2" failures="2" skipped="0" time="26.313" errors="0">
+<testcase name="Autenticación y control de acceso › CP-005 Rechazar inicio de sesión con contraseña incorrecta" classname="web/tests/auth.spec.ts" time="12.69">
+<properties>
+<property name="AC" value="AC-01">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/auth-Autenticación-y-contr-1732d-n-con-contraseña-incorrecta-web-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|../../test-results/auth-Autenticación-y-contr-1732d-n-con-contraseña-incorrecta-web-chromium/video.webm]]
+
+[[ATTACHMENT|../../test-results/auth-Autenticación-y-contr-1732d-n-con-contraseña-incorrecta-web-chromium/error-context.md]]
+
+[[ATTACHMENT|../../test-results/auth-Autenticación-y-contr-1732d-n-con-contraseña-incorrecta-web-chromium/trace.zip]]
+]]>
+</system-out>
+<failure message="expect(locator).toHaveText(expected) failed" type="expect.toHaveText">
+<![CDATA[  [web-chromium] › web/tests/auth.spec.ts:36:5 › Autenticación y control de acceso › CP-005 Rechazar inicio de sesión con contraseña incorrecta @negative @known-defect 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: locator('#rightPanel h1.title').first()
+    Timeout: 10000ms
+    - Expected  - 1
+    + Received  + 3
+
+    - Error!
+    +
+    + 			Accounts Overview
+    + 		
+
+    Call log:
+      - Expect "toHaveText" locator('#rightPanel h1.title').first() with timeout 10000ms
+      - waiting for locator('#rightPanel h1.title').first()
+        23 × locator resolved to <h1 class="title">↵⇆⇆⇆Accounts Overview↵⇆⇆</h1>
+           - unexpected value "
+    			Accounts Overview
+    		"
+
+
+       at web/pages/base.page.ts:20
+
+      18 |
+      19 |   async expectTitle(text: string | RegExp): Promise<void> {
+    > 20 |     await expect(this.title).toHaveText(text);
+         |                              ^
+      21 |   }
+      22 | }
+      23 |
+        at LoginPage.expectTitle (./web/pages/base.page.ts:20:30)
+        at LoginPage.expectLoginRejected (./web/pages/login.page.ts:36:16)
+        at ./web/tests/auth.spec.ts:43:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/auth-Autenticación-y-contr-1732d-n-con-contraseña-incorrecta-web-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/auth-Autenticación-y-contr-1732d-n-con-contraseña-incorrecta-web-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/auth-Autenticación-y-contr-1732d-n-con-contraseña-incorrecta-web-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/auth-Autenticación-y-contr-1732d-n-con-contraseña-incorrecta-web-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/auth-Autenticación-y-contr-1732d-n-con-contraseña-incorrecta-web-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+</testcase>
+<testcase name="Autenticación y control de acceso › CP-005 Rechazar inicio de sesión con usuario inexistente" classname="web/tests/auth.spec.ts" time="13.623">
+<properties>
+<property name="AC" value="AC-01">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/auth-Autenticación-y-contr-56ef0-ión-con-usuario-inexistente-web-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|../../test-results/auth-Autenticación-y-contr-56ef0-ión-con-usuario-inexistente-web-chromium/video.webm]]
+
+[[ATTACHMENT|../../test-results/auth-Autenticación-y-contr-56ef0-ión-con-usuario-inexistente-web-chromium/error-context.md]]
+
+[[ATTACHMENT|../../test-results/auth-Autenticación-y-contr-56ef0-ión-con-usuario-inexistente-web-chromium/trace.zip]]
+]]>
+</system-out>
+<failure message="expect(locator).toHaveText(expected) failed" type="expect.toHaveText">
+<![CDATA[  [web-chromium] › web/tests/auth.spec.ts:36:5 › Autenticación y control de acceso › CP-005 Rechazar inicio de sesión con usuario inexistente @negative @known-defect 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: locator('#rightPanel h1.title').first()
+    Timeout: 10000ms
+    - Expected  - 1
+    + Received  + 3
+
+    - Error!
+    +
+    + 			Accounts Overview
+    + 		
+
+    Call log:
+      - Expect "toHaveText" locator('#rightPanel h1.title').first() with timeout 10000ms
+      - waiting for locator('#rightPanel h1.title').first()
+        23 × locator resolved to <h1 class="title">↵⇆⇆⇆Accounts Overview↵⇆⇆</h1>
+           - unexpected value "
+    			Accounts Overview
+    		"
+
+
+       at web/pages/base.page.ts:20
+
+      18 |
+      19 |   async expectTitle(text: string | RegExp): Promise<void> {
+    > 20 |     await expect(this.title).toHaveText(text);
+         |                              ^
+      21 |   }
+      22 | }
+      23 |
+        at LoginPage.expectTitle (./web/pages/base.page.ts:20:30)
+        at LoginPage.expectLoginRejected (./web/pages/login.page.ts:36:16)
+        at ./web/tests/auth.spec.ts:43:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/auth-Autenticación-y-contr-56ef0-ión-con-usuario-inexistente-web-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/auth-Autenticación-y-contr-56ef0-ión-con-usuario-inexistente-web-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/auth-Autenticación-y-contr-56ef0-ión-con-usuario-inexistente-web-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/auth-Autenticación-y-contr-56ef0-ión-con-usuario-inexistente-web-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/auth-Autenticación-y-contr-56ef0-ión-con-usuario-inexistente-web-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="web/tests/bill-pay-regression.spec.ts" timestamp="2026-11-16T23:05:48.698Z" hostname="web-chromium" tests="3" failures="3" skipped="0" time="29.755" errors="0">
+<testcase name="Pago de servicios — regresión de saldos › CP-015 Accounts Overview refleja el mismo saldo que el detalle tras un pago" classname="web/tests/bill-pay-regression.spec.ts" time="3.158">
+<properties>
+<property name="AC" value="AC-04">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/bill-pay-regression-Pago-d-b1c24-que-el-detalle-tras-un-pago-web-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|../../test-results/bill-pay-regression-Pago-d-b1c24-que-el-detalle-tras-un-pago-web-chromium/video.webm]]
+
+[[ATTACHMENT|../../test-results/bill-pay-regression-Pago-d-b1c24-que-el-detalle-tras-un-pago-web-chromium/error-context.md]]
+
+[[ATTACHMENT|../../test-results/bill-pay-regression-Pago-d-b1c24-que-el-detalle-tras-un-pago-web-chromium/trace.zip]]
+]]>
+</system-out>
+<failure message="saldo en Accounts Overview" type="expect.toBe">
+<![CDATA[  [web-chromium] › web/tests/bill-pay-regression.spec.ts:6:3 › Pago de servicios — regresión de saldos › CP-015 Accounts Overview refleja el mismo saldo que el detalle tras un pago @known-defect 
+
+    Error: saldo en Accounts Overview
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 50213
+    Received: 51550
+
+      19 |       const accounts = await overviewPage.readAccounts();
+      20 |       const after = accounts.find((a) => a.id === customer.primaryAccountId)?.balanceCents;
+    > 21 |       expect(after, 'saldo en Accounts Overview').toBe(before - toCents(payment.amount));
+         |                                                   ^
+      22 |
+      23 |       const sum = accounts.reduce((total, a) => total + a.balanceCents, 0);
+      24 |       expect(await overviewPage.readTotalCents(), 'fila Total = suma de cuentas').toBe(sum);
+        at ./web/tests/bill-pay-regression.spec.ts:21:51
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/bill-pay-regression-Pago-d-b1c24-que-el-detalle-tras-un-pago-web-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/bill-pay-regression-Pago-d-b1c24-que-el-detalle-tras-un-pago-web-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/bill-pay-regression-Pago-d-b1c24-que-el-detalle-tras-un-pago-web-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/bill-pay-regression-Pago-d-b1c24-que-el-detalle-tras-un-pago-web-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/bill-pay-regression-Pago-d-b1c24-que-el-detalle-tras-un-pago-web-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+</testcase>
+<testcase name="Pago de servicios — reglas de negocio del monto › CP-010 Rechazar un pago con monto cero (0)" classname="web/tests/bill-pay-regression.spec.ts" time="12.89">
 <properties>
 <property name="AC" value="AC-03, AC-05">
 </property>
@@ -19,7 +222,7 @@
 ]]>
 </system-out>
 <failure message="el pago no debe mostrarse como exitoso" type="expect.toBeHidden">
-<![CDATA[  [web-chromium] › web/tests/bill-pay-regression.spec.ts:39:5 › Pago de servicios — reglas de negocio del monto › CP-010 Rechazar un pago con monto cero (0) @negative @known-defect › el sistema no confirma el pago 
+<![CDATA[  [web-chromium] › web/tests/bill-pay-regression.spec.ts:35:5 › Pago de servicios — reglas de negocio del monto › CP-010 Rechazar un pago con monto cero (0) @negative @known-defect › el sistema no confirma el pago 
 
     Error: el pago no debe mostrarse como exitoso
 
@@ -37,18 +240,18 @@
            - unexpected value "visible"
 
 
-       at web/pages/bill-pay.page.ts:91
+       at web/pages/bill-pay.page.ts:89
 
-      89 |       .filter({ visible: true });
-      90 |     await expect(outcome.first()).toBeVisible();
-    > 91 |     await expect(this.result, 'el pago no debe mostrarse como exitoso').toBeHidden();
+      87 |       .filter({ visible: true });
+      88 |     await expect(outcome.first()).toBeVisible();
+    > 89 |     await expect(this.result, 'el pago no debe mostrarse como exitoso').toBeHidden();
          |                                                                         ^
-      92 |   }
-      93 |
-      94 |   async expectValidationErrors(expected: Record<string, string>): Promise<void> {
-        at BillPayPage.expectPaymentNotCompleted (/home/runner/work/jardin_azuayo_prueba_qa/jardin_azuayo_prueba_qa/web/pages/bill-pay.page.ts:91:73)
-        at /home/runner/work/jardin_azuayo_prueba_qa/jardin_azuayo_prueba_qa/web/tests/bill-pay-regression.spec.ts:58:11
-        at /home/runner/work/jardin_azuayo_prueba_qa/jardin_azuayo_prueba_qa/web/tests/bill-pay-regression.spec.ts:57:9
+      90 |   }
+      91 |
+      92 |   async expectValidationErrors(expected: Record<string, string>): Promise<void> {
+        at BillPayPage.expectPaymentNotCompleted (./web/pages/bill-pay.page.ts:89:73)
+        at ./web/tests/bill-pay-regression.spec.ts:54:11
+        at ./web/tests/bill-pay-regression.spec.ts:53:9
 
     attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
     test-results/bill-pay-regression-Pago-d-f1d40-r-un-pago-con-monto-cero-0--web-chromium/test-failed-1.png
@@ -70,7 +273,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Pago de servicios — reglas de negocio del monto › CP-011 Rechazar un pago con monto negativo (-50.00)" classname="web/tests/bill-pay-regression.spec.ts" time="11.528">
+<testcase name="Pago de servicios — reglas de negocio del monto › CP-011 Rechazar un pago con monto negativo (-50.00)" classname="web/tests/bill-pay-regression.spec.ts" time="13.707">
 <properties>
 <property name="AC" value="AC-03, AC-05">
 </property>
@@ -89,7 +292,7 @@
 ]]>
 </system-out>
 <failure message="el pago no debe mostrarse como exitoso" type="expect.toBeHidden">
-<![CDATA[  [web-chromium] › web/tests/bill-pay-regression.spec.ts:39:5 › Pago de servicios — reglas de negocio del monto › CP-011 Rechazar un pago con monto negativo (-50.00) @negative @known-defect › el sistema no confirma el pago 
+<![CDATA[  [web-chromium] › web/tests/bill-pay-regression.spec.ts:35:5 › Pago de servicios — reglas de negocio del monto › CP-011 Rechazar un pago con monto negativo (-50.00) @negative @known-defect › el sistema no confirma el pago 
 
     Error: el pago no debe mostrarse como exitoso
 
@@ -107,18 +310,18 @@
            - unexpected value "visible"
 
 
-       at web/pages/bill-pay.page.ts:91
+       at web/pages/bill-pay.page.ts:89
 
-      89 |       .filter({ visible: true });
-      90 |     await expect(outcome.first()).toBeVisible();
-    > 91 |     await expect(this.result, 'el pago no debe mostrarse como exitoso').toBeHidden();
+      87 |       .filter({ visible: true });
+      88 |     await expect(outcome.first()).toBeVisible();
+    > 89 |     await expect(this.result, 'el pago no debe mostrarse como exitoso').toBeHidden();
          |                                                                         ^
-      92 |   }
-      93 |
-      94 |   async expectValidationErrors(expected: Record<string, string>): Promise<void> {
-        at BillPayPage.expectPaymentNotCompleted (/home/runner/work/jardin_azuayo_prueba_qa/jardin_azuayo_prueba_qa/web/pages/bill-pay.page.ts:91:73)
-        at /home/runner/work/jardin_azuayo_prueba_qa/jardin_azuayo_prueba_qa/web/tests/bill-pay-regression.spec.ts:58:11
-        at /home/runner/work/jardin_azuayo_prueba_qa/jardin_azuayo_prueba_qa/web/tests/bill-pay-regression.spec.ts:57:9
+      90 |   }
+      91 |
+      92 |   async expectValidationErrors(expected: Record<string, string>): Promise<void> {
+        at BillPayPage.expectPaymentNotCompleted (./web/pages/bill-pay.page.ts:89:73)
+        at ./web/tests/bill-pay-regression.spec.ts:54:11
+        at ./web/tests/bill-pay-regression.spec.ts:53:9
 
     attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
     test-results/bill-pay-regression-Pago-d-3ba0d--con-monto-negativo--50-00--web-chromium/test-failed-1.png
@@ -141,8 +344,126 @@
 </failure>
 </testcase>
 </testsuite>
-<testsuite name="api/tests/accounts.api.spec.ts" timestamp="2026-11-13T21:22:39.002Z" hostname="api" tests="1" failures="1" skipped="0" time="0.334" errors="0">
-<testcase name="API — autenticación y consulta de cuentas › API CP-021 Los servicios REST deben exigir autenticación para consultar cuentas" classname="api/tests/accounts.api.spec.ts" time="0.334">
+<testsuite name="web/tests/bill-pay.spec.ts" timestamp="2026-11-16T23:05:48.698Z" hostname="web-chromium" tests="2" failures="2" skipped="0" time="28.534" errors="0">
+<testcase name="Pago de servicios — flujo principal › CP-003 El pago descuenta el saldo y queda registrado como débito en la cuenta origen" classname="web/tests/bill-pay.spec.ts" time="13.61">
+<properties>
+<property name="AC" value="AC-04">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/bill-pay-Pago-de-servicios-05897--débito-en-la-cuenta-origen-web-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|../../test-results/bill-pay-Pago-de-servicios-05897--débito-en-la-cuenta-origen-web-chromium/video.webm]]
+
+[[ATTACHMENT|../../test-results/bill-pay-Pago-de-servicios-05897--débito-en-la-cuenta-origen-web-chromium/error-context.md]]
+
+[[ATTACHMENT|../../test-results/bill-pay-Pago-de-servicios-05897--débito-en-la-cuenta-origen-web-chromium/trace.zip]]
+]]>
+</system-out>
+<failure message="saldo después del pago" type="expect.toBe">
+<![CDATA[  [web-chromium] › web/tests/bill-pay.spec.ts:29:3 › Pago de servicios — flujo principal › CP-003 El pago descuenta el saldo y queda registrado como débito en la cuenta origen @known-defect 
+
+    Error: saldo después del pago
+
+    saldo después del pago
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 47340
+    Received: 51550
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      43 |       await expect
+      44 |         .poll(() => activityPage.readBalanceCents(), { message: 'saldo después del pago' })
+    > 45 |         .toBe(balanceBefore - toCents(payment.amount));
+         |          ^
+      46 |       await activityPage.expectDebit(`Bill Payment to ${payment.payee.name}`, Number(payment.amount));
+      47 |     },
+      48 |   );
+        at ./web/tests/bill-pay.spec.ts:45:10
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/bill-pay-Pago-de-servicios-05897--débito-en-la-cuenta-origen-web-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/bill-pay-Pago-de-servicios-05897--débito-en-la-cuenta-origen-web-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/bill-pay-Pago-de-servicios-05897--débito-en-la-cuenta-origen-web-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/bill-pay-Pago-de-servicios-05897--débito-en-la-cuenta-origen-web-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/bill-pay-Pago-de-servicios-05897--débito-en-la-cuenta-origen-web-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+</testcase>
+<testcase name="Pago de servicios — flujo principal › CP-004 Aceptar el monto mínimo positivo (0.01)" classname="web/tests/bill-pay.spec.ts" time="14.924">
+<properties>
+<property name="AC" value="AC-03 (valor límite)">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/bill-pay-Pago-de-servicios-3f0c1-monto-mínimo-positivo-0-01--web-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|../../test-results/bill-pay-Pago-de-servicios-3f0c1-monto-mínimo-positivo-0-01--web-chromium/video.webm]]
+
+[[ATTACHMENT|../../test-results/bill-pay-Pago-de-servicios-3f0c1-monto-mínimo-positivo-0-01--web-chromium/error-context.md]]
+
+[[ATTACHMENT|../../test-results/bill-pay-Pago-de-servicios-3f0c1-monto-mínimo-positivo-0-01--web-chromium/trace.zip]]
+]]>
+</system-out>
+<failure message="expect(received).toBe(expected) // Object.is equality" type="expect.toBe">
+<![CDATA[  [web-chromium] › web/tests/bill-pay.spec.ts:50:3 › Pago de servicios — flujo principal › CP-004 Aceptar el monto mínimo positivo (0.01) @known-defect 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 51549
+    Received: 51550
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      62 |
+      63 |       await activityPage.open(customer.primaryAccountId);
+    > 64 |       await expect.poll(() => activityPage.readBalanceCents()).toBe(balanceBefore - 1);
+         |                                                                ^
+      65 |     },
+      66 |   );
+      67 | });
+        at ./web/tests/bill-pay.spec.ts:64:64
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/bill-pay-Pago-de-servicios-3f0c1-monto-mínimo-positivo-0-01--web-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/bill-pay-Pago-de-servicios-3f0c1-monto-mínimo-positivo-0-01--web-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/bill-pay-Pago-de-servicios-3f0c1-monto-mínimo-positivo-0-01--web-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/bill-pay-Pago-de-servicios-3f0c1-monto-mínimo-positivo-0-01--web-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/bill-pay-Pago-de-servicios-3f0c1-monto-mínimo-positivo-0-01--web-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="api/tests/accounts.api.spec.ts" timestamp="2026-11-16T23:05:48.698Z" hostname="api" tests="1" failures="1" skipped="0" time="0.454" errors="0">
+<testcase name="API — autenticación y consulta de cuentas › API CP-021 Los servicios REST deben exigir autenticación para consultar cuentas" classname="api/tests/accounts.api.spec.ts" time="0.454">
 <properties>
 <property name="AC" value="AC-01">
 </property>
@@ -171,15 +492,15 @@
       71 |     },
       72 |   );
       73 | });
-        at /home/runner/work/jardin_azuayo_prueba_qa/jardin_azuayo_prueba_qa/api/tests/accounts.api.spec.ts:70:9
+        at ./api/tests/accounts.api.spec.ts:70:9
 
     Error Context: test-results/accounts.api-API-—-autenti-8598a-ción-para-consultar-cuentas-api/error-context.md
 ]]>
 </failure>
 </testcase>
 </testsuite>
-<testsuite name="api/tests/billpay.api.spec.ts" timestamp="2026-11-13T21:22:39.002Z" hostname="api" tests="3" failures="3" skipped="0" time="1.819" errors="0">
-<testcase name="API — reglas de negocio del monto (defectos conocidos) › API CP-010 Rechaza un pago con monto cero (0)" classname="api/tests/billpay.api.spec.ts" time="0.525">
+<testsuite name="api/tests/billpay.api.spec.ts" timestamp="2026-11-16T23:05:48.698Z" hostname="api" tests="3" failures="3" skipped="0" time="4.247" errors="0">
+<testcase name="API — reglas de negocio del monto (defectos conocidos) › API CP-010 Rechaza un pago con monto cero (0)" classname="api/tests/billpay.api.spec.ts" time="1.365">
 <properties>
 <property name="AC" value="AC-03, AC-05">
 </property>
@@ -191,30 +512,30 @@
 [[ATTACHMENT|../../test-results/billpay.api-API-—-reglas-d-436f5-a-un-pago-con-monto-cero-0--api/error-context.md]]
 ]]>
 </system-out>
-<failure message="{&quot;payeeName&quot;:&quot;Empresa Electrica Quito 937606-RPSD&quot;,&quot;amount&quot;:0,&quot;accountId&quot;:62073}" type="expect.toBeGreaterThanOrEqual">
-<![CDATA[  [api] › api/tests/billpay.api.spec.ts:106:5 › API — reglas de negocio del monto (defectos conocidos) › API CP-010 Rechaza un pago con monto cero (0) @negative @known-defect 
+<failure message="{&quot;payeeName&quot;:&quot;Empresa Electrica Quito JVITTU-DSRY&quot;,&quot;amount&quot;:0,&quot;accountId&quot;:34656}" type="expect.toBeGreaterThanOrEqual">
+<![CDATA[  [api] › api/tests/billpay.api.spec.ts:103:5 › API — reglas de negocio del monto (defectos conocidos) › API CP-010 Rechaza un pago con monto cero (0) @negative @known-defect 
 
-    Error: {"payeeName":"Empresa Electrica Quito 937606-RPSD","amount":0,"accountId":62073}
+    Error: {"payeeName":"Empresa Electrica Quito JVITTU-DSRY","amount":0,"accountId":34656}
 
     expect(received).toBeGreaterThanOrEqual(expected)
 
     Expected: >= 400
     Received:    200
 
-      118 |         const response = await api.billPayRaw(paymentAccount.id, amount, payee);
-      119 |
-    > 120 |         expect(response.status(), await response.text()).toBeGreaterThanOrEqual(400);
+      115 |         const response = await api.billPayRaw(paymentAccount.id, amount, payee);
+      116 |
+    > 117 |         expect(response.status(), await response.text()).toBeGreaterThanOrEqual(400);
           |                                                          ^
-      121 |         const after = await api.account(paymentAccount.id);
-      122 |         expect(after.balance, 'el saldo no debe cambiar').toBe(paymentAccount.balance);
-      123 |       },
-        at /home/runner/work/jardin_azuayo_prueba_qa/jardin_azuayo_prueba_qa/api/tests/billpay.api.spec.ts:120:58
+      118 |         const after = await api.account(paymentAccount.id);
+      119 |         expect(after.balance, 'el saldo no debe cambiar').toBe(paymentAccount.balance);
+      120 |       },
+        at ./api/tests/billpay.api.spec.ts:117:58
 
     Error Context: test-results/billpay.api-API-—-reglas-d-436f5-a-un-pago-con-monto-cero-0--api/error-context.md
 ]]>
 </failure>
 </testcase>
-<testcase name="API — reglas de negocio del monto (defectos conocidos) › API CP-011 Rechaza un pago con monto negativo (-50.00)" classname="api/tests/billpay.api.spec.ts" time="0.728">
+<testcase name="API — reglas de negocio del monto (defectos conocidos) › API CP-011 Rechaza un pago con monto negativo (-50.00)" classname="api/tests/billpay.api.spec.ts" time="1.666">
 <properties>
 <property name="AC" value="AC-03, AC-05">
 </property>
@@ -226,30 +547,30 @@
 [[ATTACHMENT|../../test-results/billpay.api-API-—-reglas-d-071af--con-monto-negativo--50-00--api/error-context.md]]
 ]]>
 </system-out>
-<failure message="{&quot;payeeName&quot;:&quot;Empresa Electrica Quito 937606-HS65&quot;,&quot;amount&quot;:-50.00,&quot;accountId&quot;:62184}" type="expect.toBeGreaterThanOrEqual">
-<![CDATA[  [api] › api/tests/billpay.api.spec.ts:106:5 › API — reglas de negocio del monto (defectos conocidos) › API CP-011 Rechaza un pago con monto negativo (-50.00) @negative @known-defect 
+<failure message="{&quot;payeeName&quot;:&quot;Empresa Electrica Quito JVIV34-BEYI&quot;,&quot;amount&quot;:-50.00,&quot;accountId&quot;:34767}" type="expect.toBeGreaterThanOrEqual">
+<![CDATA[  [api] › api/tests/billpay.api.spec.ts:103:5 › API — reglas de negocio del monto (defectos conocidos) › API CP-011 Rechaza un pago con monto negativo (-50.00) @negative @known-defect 
 
-    Error: {"payeeName":"Empresa Electrica Quito 937606-HS65","amount":-50.00,"accountId":62184}
+    Error: {"payeeName":"Empresa Electrica Quito JVIV34-BEYI","amount":-50.00,"accountId":34767}
 
     expect(received).toBeGreaterThanOrEqual(expected)
 
     Expected: >= 400
     Received:    200
 
-      118 |         const response = await api.billPayRaw(paymentAccount.id, amount, payee);
-      119 |
-    > 120 |         expect(response.status(), await response.text()).toBeGreaterThanOrEqual(400);
+      115 |         const response = await api.billPayRaw(paymentAccount.id, amount, payee);
+      116 |
+    > 117 |         expect(response.status(), await response.text()).toBeGreaterThanOrEqual(400);
           |                                                          ^
-      121 |         const after = await api.account(paymentAccount.id);
-      122 |         expect(after.balance, 'el saldo no debe cambiar').toBe(paymentAccount.balance);
-      123 |       },
-        at /home/runner/work/jardin_azuayo_prueba_qa/jardin_azuayo_prueba_qa/api/tests/billpay.api.spec.ts:120:58
+      118 |         const after = await api.account(paymentAccount.id);
+      119 |         expect(after.balance, 'el saldo no debe cambiar').toBe(paymentAccount.balance);
+      120 |       },
+        at ./api/tests/billpay.api.spec.ts:117:58
 
     Error Context: test-results/billpay.api-API-—-reglas-d-071af--con-monto-negativo--50-00--api/error-context.md
 ]]>
 </failure>
 </testcase>
-<testcase name="API — reglas de negocio del monto (defectos conocidos) › API CP-012 Rechaza un pago que supera el saldo disponible" classname="api/tests/billpay.api.spec.ts" time="0.566">
+<testcase name="API — reglas de negocio del monto (defectos conocidos) › API CP-012 Rechaza un pago que supera el saldo disponible" classname="api/tests/billpay.api.spec.ts" time="1.216">
 <properties>
 <property name="AC" value="AC-05">
 </property>
@@ -261,24 +582,24 @@
 [[ATTACHMENT|../../test-results/billpay.api-API-—-reglas-d-3e23e--supera-el-saldo-disponible-api/error-context.md]]
 ]]>
 </system-out>
-<failure message="{&quot;payeeName&quot;:&quot;Empresa Electrica Quito 937606-ND30&quot;,&quot;amount&quot;:1100.00,&quot;accountId&quot;:62628}" type="expect.toBeGreaterThanOrEqual">
-<![CDATA[  [api] › api/tests/billpay.api.spec.ts:127:3 › API — reglas de negocio del monto (defectos conocidos) › API CP-012 Rechaza un pago que supera el saldo disponible @negative @known-defect 
+<failure message="{&quot;payeeName&quot;:&quot;Empresa Electrica Quito JVIWKS-5Z6J&quot;,&quot;amount&quot;:1090.00,&quot;accountId&quot;:34878}" type="expect.toBeGreaterThanOrEqual">
+<![CDATA[  [api] › api/tests/billpay.api.spec.ts:124:3 › API — reglas de negocio del monto (defectos conocidos) › API CP-012 Rechaza un pago que supera el saldo disponible @negative @known-defect 
 
-    Error: {"payeeName":"Empresa Electrica Quito 937606-ND30","amount":1100.00,"accountId":62628}
+    Error: {"payeeName":"Empresa Electrica Quito JVIWKS-5Z6J","amount":1090.00,"accountId":34878}
 
     expect(received).toBeGreaterThanOrEqual(expected)
 
     Expected: >= 400
     Received:    200
 
-      140 |       const response = await api.billPayRaw(paymentAccount.id, amount, payee);
-      141 |
-    > 142 |       expect(response.status(), await response.text()).toBeGreaterThanOrEqual(400);
+      137 |       const response = await api.billPayRaw(paymentAccount.id, amount, payee);
+      138 |
+    > 139 |       expect(response.status(), await response.text()).toBeGreaterThanOrEqual(400);
           |                                                        ^
-      143 |       const after = await api.account(paymentAccount.id);
-      144 |       expect(after.balance, 'la cuenta no debe quedar en sobregiro').toBe(paymentAccount.balance);
-      145 |     },
-        at /home/runner/work/jardin_azuayo_prueba_qa/jardin_azuayo_prueba_qa/api/tests/billpay.api.spec.ts:142:56
+      140 |       const after = await api.account(paymentAccount.id);
+      141 |       expect(after.balance, 'la cuenta no debe quedar en sobregiro').toBe(paymentAccount.balance);
+      142 |     },
+        at ./api/tests/billpay.api.spec.ts:139:56
 
     Error Context: test-results/billpay.api-API-—-reglas-d-3e23e--supera-el-saldo-disponible-api/error-context.md
 ]]>

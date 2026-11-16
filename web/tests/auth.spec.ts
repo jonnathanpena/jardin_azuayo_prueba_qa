@@ -35,7 +35,7 @@ test.describe('Autenticación y control de acceso', () => {
   for (const { label, username, password } of invalidLogins) {
     test(
       `CP-005 Rechazar inicio de sesión con ${label}`,
-      { tag: ['@negative', '@regression'], annotation: { type: 'AC', description: 'AC-01' } },
+      { tag: ['@negative', '@known-defect'], annotation: { type: 'AC', description: 'AC-01' } },
       async ({ loginPage, menu }) => {
         await loginPage.goto();
         await loginPage.login({ username, password });

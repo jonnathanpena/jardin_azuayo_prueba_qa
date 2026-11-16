@@ -8,6 +8,8 @@ prueba `@known-defect` que valida el comportamiento esperado y falla mientras el
 | DEF-001 | Se aceptan pagos con monto cero o negativo; el negativo aumenta el saldo | Crítica | CP-010, CP-011 | Abierto |
 | DEF-002 | Se aceptan pagos mayores al saldo disponible | Alta | CP-012 | Abierto |
 | DEF-003 | La API REST entrega datos de cuentas sin autenticación | Crítica | CP-021 | Abierto |
+| DEF-004 | El login web acepta usuarios inexistentes o con contraseña incorrecta | Crítica | CP-005 | Abierto |
+| DEF-005 | Bill Pay web confirma el pago pero no debita la cuenta ni registra el movimiento | Crítica | CP-003, CP-004, CP-015 | Abierto |
 
 Entorno: demo pública <https://parabank.parasoft.com/parabank/>, Playwright 1.65 (Chromium), Newman 6, Node 22 en
 ubuntu-latest. Cada prueba registra su propio socio y abre una cuenta CHECKING nueva.
@@ -101,6 +103,53 @@ pertenezca al usuario autenticado.
 
 ParaBank es una aplicación de práctica y es probable que esto sea intencional. Se reporta porque en un banco real
 bloquearía la salida a producción.
+
+## DEF-004: El login web acepta usuarios inexistentes o con contraseña incorrecta
+
+- **Severidad:** crítica, cualquiera entra a la banca web sin credenciales válidas.
+- **Criterio incumplido:** AC-01.
+- **Prueba:** `web/tests/auth.spec.ts` (CP-005, dos variantes).
+- **Observado el:** 16/11/2026, en CI y en local. La API de login (`/services/bank/login/{user}/{pass}`) sí rechaza las
+  credenciales con HTTP 400.
+
+**Pasos**
+
+1. Abrir `https://parabank.parasoft.com/parabank/index.htm`.
+2. En Customer Login ingresar `usuario_que_no_existe_qa` / `demo` (o `john` / `clave-incorrecta`).
+3. Presionar Log In.
+
+**Esperado:** mensaje "Error!" y sin sesión.
+
+**Obtenido:** se abre "Accounts Overview" con la sesión de otro cliente (John Smith) y sus cuentas.
+
+**Evidencia:** [captura](capturas/DEF-004-web-cp005-usuario-inexistente-acepta-login.png).
+
+**Recomendación:** validar usuario y contraseña en el login web igual que en el servicio REST.
+
+## DEF-005: Bill Pay web confirma el pago pero no debita la cuenta
+
+- **Severidad:** crítica, el socio ve un pago exitoso que no se aplicó.
+- **Criterio incumplido:** AC-04.
+- **Pruebas:** CP-003 y CP-004 (`web/tests/bill-pay.spec.ts`) y CP-015 (`web/tests/bill-pay-regression.spec.ts`).
+- **Observado el:** 16/11/2026, en CI y en local. El mismo pago enviado directo a `POST /services/bank/billpay` sí
+  debita la cuenta (515.50 a 514.50 en la comprobación manual).
+
+**Pasos**
+
+1. Iniciar sesión con un socio nuevo (cuenta con saldo 515.50).
+2. Bill Pay: completar los datos con valores válidos y monto 42.10.
+3. Presionar Send Payment: se muestra "Bill Payment Complete".
+4. Abrir el detalle de la cuenta.
+
+**Esperado:** saldo 473.40 y un movimiento "Bill Payment to ...".
+
+**Obtenido:** saldo 515.50 y "No transactions found". La petición del formulario
+(`POST /parabank/services_proxy/bank/billpay`) responde HTTP 200 con el beneficiario y el monto, pero no cambia el
+saldo ni crea el movimiento.
+
+**Evidencia:** [captura](capturas/DEF-005-web-cp003-pago-sin-debito.png).
+
+**Recomendación:** revisar el proxy `services_proxy` del formulario web, que no persiste el pago.
 
 ## Observaciones
 

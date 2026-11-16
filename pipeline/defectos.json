@@ -20,6 +20,20 @@
       "severity": "Crítica",
       "cases": ["CP-021"],
       "postman": ["Consultar cuentas sin autenticación"]
+    },
+    {
+      "id": "DEF-004",
+      "title": "El login web acepta usuarios inexistentes o con contraseña incorrecta",
+      "severity": "Crítica",
+      "cases": ["CP-005"],
+      "postman": []
+    },
+    {
+      "id": "DEF-005",
+      "title": "Bill Pay web confirma el pago pero no debita la cuenta ni registra el movimiento",
+      "severity": "Crítica",
+      "cases": ["CP-003", "CP-004", "CP-015"],
+      "postman": []
     }
   ]
 }

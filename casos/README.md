@@ -28,7 +28,7 @@ datos propios.
 | --- | :-: | :-: | :-: | --- |
 | CP-001 Login válido | Sí | Sí | Sí | Puerta de entrada, es el smoke |
 | CP-002 Pago válido | Sí | Sí | Sí | Flujo crítico |
-| CP-003 Movimiento y saldo | Sí | Sí | Sí | Comprueba el efecto real del pago |
+| CP-003 Movimiento y saldo | Defecto | Sí | Sí | Comprueba el efecto real del pago; en web falla (DEF-005) |
 | CP-006 Bill Pay sin sesión | Sí | - | - | Control de acceso |
 | CP-008 Cuentas no coinciden | Sí | - | - | Evita pagos a cuentas equivocadas |
 | CP-010 / CP-011 Monto 0 y negativo | Sí | Sí | Sí | Riesgo financiero, hay defecto |
@@ -36,4 +36,5 @@ datos propios.
 El resto de casos también está automatizado, salvo CP-018 (doble envío del formulario) y CP-019 (pago desde una segunda
 cuenta), que quedan manuales. La columna "Script" del CSV indica dónde está cada uno.
 
-Los defectos DEF-001, DEF-002 y DEF-003 se verifican con CP-010 y CP-011, CP-012 y CP-021 respectivamente.
+Los defectos se verifican así: DEF-001 con CP-010 y CP-011, DEF-002 con CP-012, DEF-003 con CP-021, DEF-004 con CP-005 y
+DEF-005 con CP-003, CP-004 y CP-015 (en web; por API esos casos pasan).

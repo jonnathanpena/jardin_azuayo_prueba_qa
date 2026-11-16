@@ -90,10 +90,10 @@ Más detalle en [`docs/arquitectura.md`](docs/arquitectura.md).
 
 | Suite | Resultado |
 | --- | --- |
-| Web (Chromium 1366x768 y Pixel 7) | 28 de 28 |
+| Web (Chromium 1366x768 y Pixel 7) | 23 de 23 |
 | API con Playwright | 8 de 8 |
 | Postman / Newman | 25 de 25 aserciones |
-| Defectos conocidos | 12 verificaciones fallan y confirman 3 defectos |
+| Defectos conocidos | 17 verificaciones fallan (11 Playwright y 6 Postman) y confirman 5 defectos |
 
 El detalle está en [`evidencias/reporte-ejecucion.md`](evidencias/reporte-ejecucion.md) y los defectos en
 [`evidencias/defectos.md`](evidencias/defectos.md):
@@ -103,6 +103,8 @@ El detalle está en [`evidencias/reporte-ejecucion.md`](evidencias/reporte-ejecu
 | DEF-001 | Se aceptan pagos con monto cero o negativo, y el negativo aumenta el saldo | Crítica |
 | DEF-002 | Se aceptan pagos mayores al saldo (sobregiro) | Alta |
 | DEF-003 | La API REST entrega datos de cuentas sin autenticación | Crítica |
+| DEF-004 | El login web acepta usuarios inexistentes o con contraseña incorrecta | Crítica |
+| DEF-005 | Bill Pay web confirma el pago pero no debita la cuenta | Crítica |
 
 ## Lo que no se ejecutó
 
@@ -118,9 +120,11 @@ El detalle está en [`evidencias/reporte-ejecucion.md`](evidencias/reporte-ejecu
 - La demo pública es compartida y se reinicia, y los saldos de `john/demo` cambian solos. Por eso se usan datos propios
   y 1 reintento en CI (0 en las pruebas de defectos).
 - El campo teléfono de Bill Pay cambia de `id` y `class` en cada carga, así que se ubica por el atributo `name`.
-- En la primera corrida fallaron 15 de 28 pruebas web porque un localizador encontraba varios elementos ocultos y
-  Playwright lo rechazaba en modo estricto. Era un error de la prueba, no de la aplicación; se corrigió filtrando
-  solo los elementos visibles.
+- En el primer run del pipeline fallaron 5 pruebas web (login con credenciales inválidas y 3 comprobaciones de saldo).
+  Se reprodujo a mano y es comportamiento actual de la demo, así que se documentó como DEF-004 y DEF-005 y esas pruebas
+  pasaron a `@known-defect`.
+- CP-002 fallaba cerca de la mitad de las veces porque el clic en Send Payment se hacía antes de que el formulario
+  terminara de cargar. Se corrigió esperando a que la red se calme.
 - Solo se prueba en Chromium.
 
 ## Autor

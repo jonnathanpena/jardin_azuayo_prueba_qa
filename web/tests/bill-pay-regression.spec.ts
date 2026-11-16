@@ -5,7 +5,7 @@ import { expect, test } from '../fixtures/test.fixture';
 test.describe('Pago de servicios — regresión de saldos', () => {
   test(
     'CP-015 Accounts Overview refleja el mismo saldo que el detalle tras un pago',
-    { tag: ['@regression'], annotation: { type: 'AC', description: 'AC-04' } },
+    { tag: ['@known-defect'], annotation: { type: 'AC', description: 'AC-04' } },
     async ({ billPayPage, overviewPage, activityPage, customer }) => {
       const payment = buildBillPayment('internet', { amount: '13.37' });
       await overviewPage.goto();

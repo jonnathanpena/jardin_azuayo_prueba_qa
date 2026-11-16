@@ -28,7 +28,7 @@ test.describe('Pago de servicios — flujo principal', () => {
 
   test(
     'CP-003 El pago descuenta el saldo y queda registrado como débito en la cuenta origen',
-    { tag: ['@smoke', '@regression'], annotation: { type: 'AC', description: 'AC-04' } },
+    { tag: ['@known-defect'], annotation: { type: 'AC', description: 'AC-04' } },
     async ({ billPayPage, activityPage, customer }) => {
       const payment = buildBillPayment('water', { amount: '42.10' });
 
@@ -49,7 +49,7 @@ test.describe('Pago de servicios — flujo principal', () => {
 
   test(
     'CP-004 Aceptar el monto mínimo positivo (0.01)',
-    { tag: ['@regression'], annotation: { type: 'AC', description: 'AC-03 (valor límite)' } },
+    { tag: ['@known-defect'], annotation: { type: 'AC', description: 'AC-03 (valor límite)' } },
     async ({ billPayPage, activityPage, customer }) => {
       const payment = buildBillPayment('internet', { amount: '0.01' });
 
