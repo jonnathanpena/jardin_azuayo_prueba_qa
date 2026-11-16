@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="ParaBank - Pago de servicios básicos" tests="12" time="1.508">
+  <testsuite name="01-preparacion / Login con usuario válido" id="eb41e5b4-1cad-4156-b464-6c531aa337a7" timestamp="2026-11-13T21:22:18.648Z" tests="3" failures="0" errors="0" time="0.370">
+    <testcase name="HTTP 200" time="0.370" classname="01PreparacionLoginConUsuarioValido"/>
+    <testcase name="Responde JSON" time="0.370" classname="01PreparacionLoginConUsuarioValido"/>
+    <testcase name="Devuelve el cliente con id y nombre" time="0.370" classname="01PreparacionLoginConUsuarioValido"/>
+  </testsuite>
+  <testsuite name="01-preparacion / Listar cuentas del cliente" id="df38e8dd-e686-4a89-a3ec-3f97e3147f16" timestamp="2026-11-13T21:22:18.648Z" tests="3" failures="0" errors="0" time="0.104">
+    <testcase name="HTTP 200" time="0.104" classname="01PreparacionListarCuentasDelCliente"/>
+    <testcase name="El cliente tiene al menos una cuenta" time="0.104" classname="01PreparacionListarCuentasDelCliente"/>
+    <testcase name="Todas las cuentas pertenecen al cliente" time="0.104" classname="01PreparacionListarCuentasDelCliente"/>
+  </testsuite>
+  <testsuite name="01-preparacion / Crear cuenta de pago (CHECKING)" id="4d58728a-9744-4caa-be95-127588e86707" timestamp="2026-11-13T21:22:18.648Z" tests="2" failures="0" errors="0" time="0.108">
+    <testcase name="HTTP 200" time="0.108" classname="01PreparacionCrearCuentaDePagoChecking"/>
+    <testcase name="Se crea una cuenta CHECKING del cliente" time="0.108" classname="01PreparacionCrearCuentaDePagoChecking"/>
+  </testsuite>
+  <testsuite name="01-preparacion / Consultar saldo inicial de la cuenta de pago" id="4101ee93-f5ee-4605-a2b6-b2e2602460de" timestamp="2026-11-13T21:22:18.648Z" tests="2" failures="0" errors="0" time="0.105">
+    <testcase name="HTTP 200" time="0.105" classname="01PreparacionConsultarSaldoInicialDeLaCuentaDePago"/>
+    <testcase name="La cuenta tiene saldo positivo para pagar" time="0.105" classname="01PreparacionConsultarSaldoInicialDeLaCuentaDePago"/>
+  </testsuite>
+  <testsuite name="02-pago-servicios-positivos / Pagar servicio básico (monto válido)" id="f3992401-087d-456d-a35d-e4d45ecf5b60" timestamp="2026-11-13T21:22:18.648Z" tests="3" failures="0" errors="0" time="0.099">
+    <testcase name="HTTP 200" time="0.099" classname="02PagoServiciosPositivosPagarServicioBasicoMontoValido"/>
+    <testcase name="Tiempo de respuesta &lt; 3 s" time="0.099" classname="02PagoServiciosPositivosPagarServicioBasicoMontoValido"/>
+    <testcase name="Confirma beneficiario, monto y cuenta origen" time="0.099" classname="02PagoServiciosPositivosPagarServicioBasicoMontoValido"/>
+  </testsuite>
+  <testsuite name="02-pago-servicios-positivos / Verificar saldo descontado" id="6e1208a7-9e62-4f46-892c-41b4b19040a1" timestamp="2026-11-13T21:22:18.648Z" tests="1" failures="0" errors="0" time="0.117">
+    <testcase name="El saldo baja exactamente el monto pagado" time="0.117" classname="02PagoServiciosPositivosVerificarSaldoDescontado"/>
+  </testsuite>
+  <testsuite name="02-pago-servicios-positivos / Verificar débito en el historial" id="33292e87-29e7-4ade-bca8-f0810b5fd456" timestamp="2026-11-13T21:22:18.648Z" tests="3" failures="0" errors="0" time="0.096">
+    <testcase name="HTTP 200" time="0.096" classname="02PagoServiciosPositivosVerificarDebitoEnElHistorial"/>
+    <testcase name="Existe un único movimiento del pago" time="0.096" classname="02PagoServiciosPositivosVerificarDebitoEnElHistorial"/>
+    <testcase name="El movimiento es un débito por el monto pagado" time="0.096" classname="02PagoServiciosPositivosVerificarDebitoEnElHistorial"/>
+  </testsuite>
+  <testsuite name="02-pago-servicios-positivos / Buscar el pago por monto" id="be58e67e-10fa-4af4-a263-abe2736242ae" timestamp="2026-11-13T21:22:18.648Z" tests="2" failures="0" errors="0" time="0.097">
+    <testcase name="HTTP 200" time="0.097" classname="02PagoServiciosPositivosBuscarElPagoPorMonto"/>
+    <testcase name="La búsqueda por monto devuelve el movimiento del pago" time="0.097" classname="02PagoServiciosPositivosBuscarElPagoPorMonto"/>
+  </testsuite>
+  <testsuite name="02-pago-servicios-positivos / Consultar el movimiento por id" id="8be5be6b-6f08-41e7-b175-2ca8475446d7" timestamp="2026-11-13T21:22:18.648Z" tests="2" failures="0" errors="0" time="0.096">
+    <testcase name="HTTP 200" time="0.096" classname="02PagoServiciosPositivosConsultarElMovimientoPorId"/>
+    <testcase name="El detalle del movimiento coincide con el pago" time="0.096" classname="02PagoServiciosPositivosConsultarElMovimientoPorId"/>
+  </testsuite>
+  <testsuite name="03-pago-servicios-negativos / Login con contraseña incorrecta" id="b92fe0d2-87b1-4bd6-878c-c78b7f5c17f8" timestamp="2026-11-13T21:22:18.648Z" tests="1" failures="0" errors="0" time="0.103">
+    <testcase name="El servicio rechaza la operación (HTTP 4xx/5xx)" time="0.103" classname="03PagoServiciosNegativosLoginConContrasenaIncorrecta"/>
+  </testsuite>
+  <testsuite name="03-pago-servicios-negativos / Pagar desde una cuenta inexistente" id="c9349f92-35e2-427b-90fb-a70cf37dcee5" timestamp="2026-11-13T21:22:18.648Z" tests="1" failures="0" errors="0" time="0.113">
+    <testcase name="El servicio rechaza la operación (HTTP 4xx/5xx)" time="0.113" classname="03PagoServiciosNegativosPagarDesdeUnaCuentaInexistente"/>
+  </testsuite>
+  <testsuite name="03-pago-servicios-negativos / Pagar con monto no numérico" id="73f0e954-8490-44be-bf91-7ab6a2c4e3f6" timestamp="2026-11-13T21:22:18.648Z" tests="2" failures="0" errors="0" time="0.100">
+    <testcase name="El servicio rechaza la operación (HTTP 4xx/5xx)" time="0.100" classname="03PagoServiciosNegativosPagarConMontoNoNumerico"/>
+    <testcase name="El saldo de la cuenta no cambia" time="0.100" classname="03PagoServiciosNegativosPagarConMontoNoNumerico"/>
+  </testsuite>
+</testsuites>

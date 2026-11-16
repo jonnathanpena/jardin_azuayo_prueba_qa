@@ -1,0 +1,169 @@
+name: QA Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: 'URL base de ParaBank (con barra final)'
+        required: false
+        default: 'https://parabank.parasoft.com/parabank/'
+  schedule:
+    # Regresión nocturna de lunes a viernes (01:00 hora de Ecuador)
+    - cron: '0 6 * * 1-5'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: qa-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CI: true
+  PARABANK_BASE_URL: ${{ inputs.base_url || 'https://parabank.parasoft.com/parabank/' }}
+
+jobs:
+  static:
+    name: Calidad de código
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: ESLint
+        run: npm run lint
+      - name: TypeScript
+        run: npm run typecheck
+      - name: Prettier
+        run: npm run format:check
+      - name: Plan JMeter (validación estática)
+        run: npm run jmx:validate
+
+  api:
+    name: Pruebas API (Playwright)
+    needs: static
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Ejecutar pruebas API
+        run: npm run test:api
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: reportes-api
+          path: reports/
+          if-no-files-found: ignore
+
+  postman:
+    name: Pruebas API (Postman / Newman)
+    needs: static
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Ejecutar colección
+        run: npm run test:postman -- --env-var "apiUrl=${PARABANK_BASE_URL}services/bank"
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: reportes-postman
+          path: reports/
+          if-no-files-found: ignore
+
+  web:
+    name: Pruebas web (desktop + mobile web)
+    needs: static
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Instalar Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Ejecutar pruebas web
+        run: npx playwright test --project=web-chromium --project=web-mobile --grep-invert @known-defect
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: reportes-web
+          path: |
+            reports/
+            test-results/
+          if-no-files-found: ignore
+
+  # Las pruebas @known-defect validan el comportamiento ESPERADO; fallan mientras el defecto exista.
+  # El job queda en rojo como evidencia, pero no bloquea el pipeline. Si un día pasa en verde, el defecto
+  # se corrigió y la prueba debe dejar de etiquetarse como @known-defect.
+  known-defects:
+    name: Verificación de defectos conocidos
+    needs: static
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Instalar Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Playwright (@known-defect)
+        run: npm run test:defects
+      - name: Postman (04-defectos-conocidos)
+        if: always()
+        run: npm run test:postman:defects -- --env-var "apiUrl=${PARABANK_BASE_URL}services/bank"
+      - name: Defectos abiertos (resumen y annotations)
+        if: always()
+        run: npm run ci:defects -- reports
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: reportes-defectos
+          path: |
+            reports/
+            test-results/
+          if-no-files-found: ignore
+
+  summary:
+    name: Resumen
+    needs: [api, postman, web, known-defects]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: reportes-*
+          path: artefactos
+      - name: Publicar resumen
+        run: npm run ci:summary -- artefactos

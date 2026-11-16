@@ -1,0 +1,54 @@
+<testsuites id="" name="" tests="8" failures="0" skipped="0" errors="0" time="4.00866">
+<testsuite name="api/tests/accounts.api.spec.ts" timestamp="2026-11-13T21:22:15.157Z" hostname="api" tests="3" failures="0" skipped="0" time="1.216" errors="0">
+<testcase name="API — autenticación y consulta de cuentas › API CP-001 Login con credenciales válidas devuelve el cliente" classname="api/tests/accounts.api.spec.ts" time="0.304">
+<properties>
+<property name="AC" value="AC-01">
+</property>
+</properties>
+</testcase>
+<testcase name="API — autenticación y consulta de cuentas › API CP-005 Login con contraseña incorrecta es rechazado" classname="api/tests/accounts.api.spec.ts" time="0.275">
+<properties>
+<property name="AC" value="AC-01">
+</property>
+</properties>
+</testcase>
+<testcase name="API — autenticación y consulta de cuentas › API CP-015 Las cuentas del cliente son coherentes con su detalle" classname="api/tests/accounts.api.spec.ts" time="0.637">
+<properties>
+<property name="AC" value="AC-04">
+</property>
+</properties>
+</testcase>
+</testsuite>
+<testsuite name="api/tests/billpay.api.spec.ts" timestamp="2026-11-13T21:22:15.157Z" hostname="api" tests="5" failures="0" skipped="0" time="2.919" errors="0">
+<testcase name="API — pago de servicios (POST /billpay) › API CP-002/CP-003 Un pago válido descuenta el saldo y genera el débito" classname="api/tests/billpay.api.spec.ts" time="0.791">
+<properties>
+<property name="AC" value="AC-02, AC-03, AC-04">
+</property>
+</properties>
+</testcase>
+<testcase name="API — pago de servicios (POST /billpay) › API CP-017 El pago se puede localizar buscando por monto" classname="api/tests/billpay.api.spec.ts" time="0.672">
+<properties>
+<property name="AC" value="AC-04">
+</property>
+</properties>
+</testcase>
+<testcase name="API — pago de servicios (POST /billpay) › API CP-004 Acepta el monto mínimo positivo 0.01" classname="api/tests/billpay.api.spec.ts" time="0.643">
+<properties>
+<property name="AC" value="AC-03 (valor límite)">
+</property>
+</properties>
+</testcase>
+<testcase name="API — pago de servicios (POST /billpay) › API CP-013 Pagar desde una cuenta inexistente es rechazado" classname="api/tests/billpay.api.spec.ts" time="0.121">
+<properties>
+<property name="AC" value="AC-05">
+</property>
+</properties>
+</testcase>
+<testcase name="API — pago de servicios (POST /billpay) › API CP-020 Un monto no numérico es rechazado" classname="api/tests/billpay.api.spec.ts" time="0.692">
+<properties>
+<property name="AC" value="AC-03, AC-05">
+</property>
+</properties>
+</testcase>
+</testsuite>
+</testsuites>

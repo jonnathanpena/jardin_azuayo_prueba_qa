@@ -1,0 +1,326 @@
+<testsuites id="" name="" tests="28" failures="0" skipped="0" errors="0" time="30.984111000000002">
+<testsuite name="web/tests/auth.spec.ts" timestamp="2026-11-13T21:22:39.625Z" hostname="web-chromium" tests="7" failures="0" skipped="0" time="10.419" errors="0">
+<testcase name="Autenticación y control de acceso › CP-001 Iniciar sesión con un usuario válido" classname="web/tests/auth.spec.ts" time="1.701">
+<properties>
+<property name="AC" value="AC-01">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/auth-Autenticación-y-contr-cf792-esión-con-un-usuario-válido-web-chromium/test-finished-1.png]]
+
+[[ATTACHMENT|../../test-results/auth-Autenticación-y-contr-cf792-esión-con-un-usuario-válido-web-chromium/test-finished-2.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Autenticación y control de acceso › CP-001b Iniciar sesión con el usuario de demostración configurado" classname="web/tests/auth.spec.ts" time="1.46">
+<properties>
+<property name="AC" value="AC-01">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/auth-Autenticación-y-contr-f4f7e-de-demostración-configurado-web-chromium/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Autenticación y control de acceso › CP-005 Rechazar inicio de sesión con contraseña incorrecta" classname="web/tests/auth.spec.ts" time="1.393">
+<properties>
+<property name="AC" value="AC-01">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/auth-Autenticación-y-contr-1732d-n-con-contraseña-incorrecta-web-chromium/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Autenticación y control de acceso › CP-005 Rechazar inicio de sesión con usuario inexistente" classname="web/tests/auth.spec.ts" time="1.39">
+<properties>
+<property name="AC" value="AC-01">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/auth-Autenticación-y-contr-56ef0-ión-con-usuario-inexistente-web-chromium/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Autenticación y control de acceso › CP-005c Rechazar inicio de sesión con credenciales vacías" classname="web/tests/auth.spec.ts" time="1.233">
+<properties>
+<property name="AC" value="AC-01">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/auth-Autenticación-y-contr-b8d6a-ión-con-credenciales-vacías-web-chromium/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Autenticación y control de acceso › CP-006 Impedir el acceso a Bill Pay sin sesión iniciada" classname="web/tests/auth.spec.ts" time="1.072">
+<properties>
+<property name="AC" value="AC-01">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/auth-Autenticación-y-contr-35847-ill-Pay-sin-sesión-iniciada-web-chromium/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Autenticación y control de acceso › CP-016 Cerrar sesión invalida el acceso a Bill Pay" classname="web/tests/auth.spec.ts" time="2.17">
+<properties>
+<property name="AC" value="AC-01">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/auth-Autenticación-y-contr-0fe80-valida-el-acceso-a-Bill-Pay-web-chromium/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="web/tests/bill-pay-regression.spec.ts" timestamp="2026-11-13T21:22:39.625Z" hostname="web-chromium" tests="1" failures="0" skipped="0" time="2.886" errors="0">
+<testcase name="Pago de servicios — regresión de saldos › CP-015 Accounts Overview refleja el mismo saldo que el detalle tras un pago" classname="web/tests/bill-pay-regression.spec.ts" time="2.886">
+<properties>
+<property name="AC" value="AC-04">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/bill-pay-regression-Pago-d-b1c24-que-el-detalle-tras-un-pago-web-chromium/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="web/tests/bill-pay-validations.spec.ts" timestamp="2026-11-13T21:22:39.625Z" hostname="web-chromium" tests="15" failures="0" skipped="0" time="20.254" errors="0">
+<testcase name="Pago de servicios — validaciones del formulario › CP-007 Enviar el formulario vacío muestra todos los campos obligatorios" classname="web/tests/bill-pay-validations.spec.ts" time="1.071">
+<properties>
+<property name="AC" value="AC-02, AC-05">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/bill-pay-validations-Pago--190f9-dos-los-campos-obligatorios-web-chromium/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Pago de servicios — validaciones del formulario › CP-014 Campo obligatorio vacío: payee.name" classname="web/tests/bill-pay-validations.spec.ts" time="1.354">
+<properties>
+<property name="AC" value="AC-02, AC-05">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/bill-pay-validations-Pago--3ba11-bligatorio-vacío-payee-name-web-chromium/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Pago de servicios — validaciones del formulario › CP-014 Campo obligatorio vacío: payee.address.street" classname="web/tests/bill-pay-validations.spec.ts" time="1.348">
+<properties>
+<property name="AC" value="AC-02, AC-05">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/bill-pay-validations-Pago--3115e--vacío-payee-address-street-web-chromium/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Pago de servicios — validaciones del formulario › CP-014 Campo obligatorio vacío: payee.address.city" classname="web/tests/bill-pay-validations.spec.ts" time="1.315">
+<properties>
+<property name="AC" value="AC-02, AC-05">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/bill-pay-validations-Pago--18ec9-io-vacío-payee-address-city-web-chromium/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Pago de servicios — validaciones del formulario › CP-014 Campo obligatorio vacío: payee.address.state" classname="web/tests/bill-pay-validations.spec.ts" time="1.238">
+<properties>
+<property name="AC" value="AC-02, AC-05">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/bill-pay-validations-Pago--275a9-o-vacío-payee-address-state-web-chromium/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Pago de servicios — validaciones del formulario › CP-014 Campo obligatorio vacío: payee.address.zipCode" classname="web/tests/bill-pay-validations.spec.ts" time="1.44">
+<properties>
+<property name="AC" value="AC-02, AC-05">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/bill-pay-validations-Pago--9850f-vacío-payee-address-zipCode-web-chromium/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Pago de servicios — validaciones del formulario › CP-014 Campo obligatorio vacío: payee.phoneNumber" classname="web/tests/bill-pay-validations.spec.ts" time="1.513">
+<properties>
+<property name="AC" value="AC-02, AC-05">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/bill-pay-validations-Pago--3d642-rio-vacío-payee-phoneNumber-web-chromium/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Pago de servicios — validaciones del formulario › CP-014 Campo obligatorio vacío: payee.accountNumber" classname="web/tests/bill-pay-validations.spec.ts" time="1.483">
+<properties>
+<property name="AC" value="AC-02, AC-05">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/bill-pay-validations-Pago--bd80c-o-vacío-payee-accountNumber-web-chromium/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Pago de servicios — validaciones del formulario › CP-014 Campo obligatorio vacío: verifyAccount" classname="web/tests/bill-pay-validations.spec.ts" time="1.472">
+<properties>
+<property name="AC" value="AC-02, AC-05">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/bill-pay-validations-Pago--4c765-gatorio-vacío-verifyAccount-web-chromium/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Pago de servicios — validaciones del formulario › CP-014 Campo obligatorio vacío: amount" classname="web/tests/bill-pay-validations.spec.ts" time="1.371">
+<properties>
+<property name="AC" value="AC-02, AC-05">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/bill-pay-validations-Pago--b0211-po-obligatorio-vacío-amount-web-chromium/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Pago de servicios — validaciones del formulario › CP-008 Rechazar el pago cuando la cuenta de verificación no coincide" classname="web/tests/bill-pay-validations.spec.ts" time="1.512">
+<properties>
+<property name="AC" value="AC-02, AC-05">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/bill-pay-validations-Pago--1acf0-de-verificación-no-coincide-web-chromium/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Pago de servicios — validaciones del formulario › CP-009 Rechazar formato no numérico: monto con letras" classname="web/tests/bill-pay-validations.spec.ts" time="1.164">
+<properties>
+<property name="AC" value="AC-03, AC-05">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/bill-pay-validations-Pago--787df-o-numérico-monto-con-letras-web-chromium/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Pago de servicios — validaciones del formulario › CP-009 Rechazar formato no numérico: monto con símbolos" classname="web/tests/bill-pay-validations.spec.ts" time="1.51">
+<properties>
+<property name="AC" value="AC-03, AC-05">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/bill-pay-validations-Pago--6dd11-numérico-monto-con-símbolos-web-chromium/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Pago de servicios — validaciones del formulario › CP-009 Rechazar formato no numérico: cuenta del beneficiario con letras" classname="web/tests/bill-pay-validations.spec.ts" time="1.252">
+<properties>
+<property name="AC" value="AC-03, AC-05">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/bill-pay-validations-Pago--aa34b-del-beneficiario-con-letras-web-chromium/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Pago de servicios — validaciones del formulario › CP-020 Un monto que el servidor no puede interpretar no se muestra como pago exitoso" classname="web/tests/bill-pay-validations.spec.ts" time="1.211">
+<properties>
+<property name="AC" value="AC-05">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/bill-pay-validations-Pago--6bf04-e-muestra-como-pago-exitoso-web-chromium/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="web/tests/bill-pay.spec.ts" timestamp="2026-11-13T21:22:39.625Z" hostname="web-chromium" tests="3" failures="0" skipped="0" time="7.691" errors="0">
+<testcase name="Pago de servicios — flujo principal › CP-002 Registrar un pago de servicio básico con datos válidos" classname="web/tests/bill-pay.spec.ts" time="2.134">
+<properties>
+<property name="AC" value="AC-02, AC-03, AC-04">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/bill-pay-Pago-de-servicios-05aeb-io-básico-con-datos-válidos-web-chromium/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Pago de servicios — flujo principal › CP-003 El pago descuenta el saldo y queda registrado como débito en la cuenta origen" classname="web/tests/bill-pay.spec.ts" time="2.902">
+<properties>
+<property name="AC" value="AC-04">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/bill-pay-Pago-de-servicios-05897--débito-en-la-cuenta-origen-web-chromium/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Pago de servicios — flujo principal › CP-004 Aceptar el monto mínimo positivo (0.01)" classname="web/tests/bill-pay.spec.ts" time="2.655">
+<properties>
+<property name="AC" value="AC-03 (valor límite)">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/bill-pay-Pago-de-servicios-3f0c1-monto-mínimo-positivo-0-01--web-chromium/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="web/tests/auth.spec.ts" timestamp="2026-11-13T21:22:39.625Z" hostname="web-mobile" tests="1" failures="0" skipped="0" time="1.53" errors="0">
+<testcase name="Autenticación y control de acceso › CP-001 Iniciar sesión con un usuario válido" classname="web/tests/auth.spec.ts" time="1.53">
+<properties>
+<property name="AC" value="AC-01">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/auth-Autenticación-y-contr-cf792-esión-con-un-usuario-válido-web-mobile/test-finished-1.png]]
+
+[[ATTACHMENT|../../test-results/auth-Autenticación-y-contr-cf792-esión-con-un-usuario-válido-web-mobile/test-finished-2.png]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="web/tests/bill-pay.spec.ts" timestamp="2026-11-13T21:22:39.625Z" hostname="web-mobile" tests="1" failures="0" skipped="0" time="1.175" errors="0">
+<testcase name="Pago de servicios — flujo principal › CP-002 Registrar un pago de servicio básico con datos válidos" classname="web/tests/bill-pay.spec.ts" time="1.175">
+<properties>
+<property name="AC" value="AC-02, AC-03, AC-04">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/bill-pay-Pago-de-servicios-05aeb-io-básico-con-datos-válidos-web-mobile/test-finished-1.png]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+</testsuites>

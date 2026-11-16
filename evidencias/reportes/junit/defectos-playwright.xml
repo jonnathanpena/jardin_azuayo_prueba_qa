@@ -1,0 +1,288 @@
+<testsuites id="" name="" tests="6" failures="6" skipped="0" errors="0" time="30.013105">
+<testsuite name="web/tests/bill-pay-regression.spec.ts" timestamp="2026-11-13T21:22:39.002Z" hostname="web-chromium" tests="2" failures="2" skipped="0" time="23.297" errors="0">
+<testcase name="Pago de servicios — reglas de negocio del monto › CP-010 Rechazar un pago con monto cero (0)" classname="web/tests/bill-pay-regression.spec.ts" time="11.769">
+<properties>
+<property name="AC" value="AC-03, AC-05">
+</property>
+<property name="issue" value="DEF-001">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/bill-pay-regression-Pago-d-f1d40-r-un-pago-con-monto-cero-0--web-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|../../test-results/bill-pay-regression-Pago-d-f1d40-r-un-pago-con-monto-cero-0--web-chromium/video.webm]]
+
+[[ATTACHMENT|../../test-results/bill-pay-regression-Pago-d-f1d40-r-un-pago-con-monto-cero-0--web-chromium/error-context.md]]
+
+[[ATTACHMENT|../../test-results/bill-pay-regression-Pago-d-f1d40-r-un-pago-con-monto-cero-0--web-chromium/trace.zip]]
+]]>
+</system-out>
+<failure message="el pago no debe mostrarse como exitoso" type="expect.toBeHidden">
+<![CDATA[  [web-chromium] › web/tests/bill-pay-regression.spec.ts:39:5 › Pago de servicios — reglas de negocio del monto › CP-010 Rechazar un pago con monto cero (0) @negative @known-defect › el sistema no confirma el pago 
+
+    Error: el pago no debe mostrarse como exitoso
+
+    expect(locator).toBeHidden() failed
+
+    Locator:  locator('#billpayResult')
+    Expected: hidden
+    Received: visible
+    Timeout:  10000ms
+
+    Call log:
+      - el pago no debe mostrarse como exitoso locator('#billpayResult') with timeout 10000ms
+      - waiting for locator('#billpayResult')
+        24 × locator resolved to <div id="billpayResult">…</div>
+           - unexpected value "visible"
+
+
+       at web/pages/bill-pay.page.ts:91
+
+      89 |       .filter({ visible: true });
+      90 |     await expect(outcome.first()).toBeVisible();
+    > 91 |     await expect(this.result, 'el pago no debe mostrarse como exitoso').toBeHidden();
+         |                                                                         ^
+      92 |   }
+      93 |
+      94 |   async expectValidationErrors(expected: Record<string, string>): Promise<void> {
+        at BillPayPage.expectPaymentNotCompleted (/home/runner/work/jardin_azuayo_prueba_qa/jardin_azuayo_prueba_qa/web/pages/bill-pay.page.ts:91:73)
+        at /home/runner/work/jardin_azuayo_prueba_qa/jardin_azuayo_prueba_qa/web/tests/bill-pay-regression.spec.ts:58:11
+        at /home/runner/work/jardin_azuayo_prueba_qa/jardin_azuayo_prueba_qa/web/tests/bill-pay-regression.spec.ts:57:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/bill-pay-regression-Pago-d-f1d40-r-un-pago-con-monto-cero-0--web-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/bill-pay-regression-Pago-d-f1d40-r-un-pago-con-monto-cero-0--web-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/bill-pay-regression-Pago-d-f1d40-r-un-pago-con-monto-cero-0--web-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/bill-pay-regression-Pago-d-f1d40-r-un-pago-con-monto-cero-0--web-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/bill-pay-regression-Pago-d-f1d40-r-un-pago-con-monto-cero-0--web-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+</testcase>
+<testcase name="Pago de servicios — reglas de negocio del monto › CP-011 Rechazar un pago con monto negativo (-50.00)" classname="web/tests/bill-pay-regression.spec.ts" time="11.528">
+<properties>
+<property name="AC" value="AC-03, AC-05">
+</property>
+<property name="issue" value="DEF-001">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/bill-pay-regression-Pago-d-3ba0d--con-monto-negativo--50-00--web-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|../../test-results/bill-pay-regression-Pago-d-3ba0d--con-monto-negativo--50-00--web-chromium/video.webm]]
+
+[[ATTACHMENT|../../test-results/bill-pay-regression-Pago-d-3ba0d--con-monto-negativo--50-00--web-chromium/error-context.md]]
+
+[[ATTACHMENT|../../test-results/bill-pay-regression-Pago-d-3ba0d--con-monto-negativo--50-00--web-chromium/trace.zip]]
+]]>
+</system-out>
+<failure message="el pago no debe mostrarse como exitoso" type="expect.toBeHidden">
+<![CDATA[  [web-chromium] › web/tests/bill-pay-regression.spec.ts:39:5 › Pago de servicios — reglas de negocio del monto › CP-011 Rechazar un pago con monto negativo (-50.00) @negative @known-defect › el sistema no confirma el pago 
+
+    Error: el pago no debe mostrarse como exitoso
+
+    expect(locator).toBeHidden() failed
+
+    Locator:  locator('#billpayResult')
+    Expected: hidden
+    Received: visible
+    Timeout:  10000ms
+
+    Call log:
+      - el pago no debe mostrarse como exitoso locator('#billpayResult') with timeout 10000ms
+      - waiting for locator('#billpayResult')
+        24 × locator resolved to <div id="billpayResult">…</div>
+           - unexpected value "visible"
+
+
+       at web/pages/bill-pay.page.ts:91
+
+      89 |       .filter({ visible: true });
+      90 |     await expect(outcome.first()).toBeVisible();
+    > 91 |     await expect(this.result, 'el pago no debe mostrarse como exitoso').toBeHidden();
+         |                                                                         ^
+      92 |   }
+      93 |
+      94 |   async expectValidationErrors(expected: Record<string, string>): Promise<void> {
+        at BillPayPage.expectPaymentNotCompleted (/home/runner/work/jardin_azuayo_prueba_qa/jardin_azuayo_prueba_qa/web/pages/bill-pay.page.ts:91:73)
+        at /home/runner/work/jardin_azuayo_prueba_qa/jardin_azuayo_prueba_qa/web/tests/bill-pay-regression.spec.ts:58:11
+        at /home/runner/work/jardin_azuayo_prueba_qa/jardin_azuayo_prueba_qa/web/tests/bill-pay-regression.spec.ts:57:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/bill-pay-regression-Pago-d-3ba0d--con-monto-negativo--50-00--web-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/bill-pay-regression-Pago-d-3ba0d--con-monto-negativo--50-00--web-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/bill-pay-regression-Pago-d-3ba0d--con-monto-negativo--50-00--web-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/bill-pay-regression-Pago-d-3ba0d--con-monto-negativo--50-00--web-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/bill-pay-regression-Pago-d-3ba0d--con-monto-negativo--50-00--web-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="api/tests/accounts.api.spec.ts" timestamp="2026-11-13T21:22:39.002Z" hostname="api" tests="1" failures="1" skipped="0" time="0.334" errors="0">
+<testcase name="API — autenticación y consulta de cuentas › API CP-021 Los servicios REST deben exigir autenticación para consultar cuentas" classname="api/tests/accounts.api.spec.ts" time="0.334">
+<properties>
+<property name="AC" value="AC-01">
+</property>
+<property name="issue" value="DEF-003">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/accounts.api-API-—-autenti-8598a-ción-para-consultar-cuentas-api/error-context.md]]
+]]>
+</system-out>
+<failure message="consultar cuentas sin credenciales debe responder 401 o 403 (respondió 200)" type="expect.toBe">
+<![CDATA[  [api] › api/tests/accounts.api.spec.ts:53:3 › API — autenticación y consulta de cuentas › API CP-021 Los servicios REST deben exigir autenticación para consultar cuentas @security @known-defect 
+
+    Error: consultar cuentas sin credenciales debe responder 401 o 403 (respondió 200)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      68 |         [401, 403].includes(status),
+      69 |         `consultar cuentas sin credenciales debe responder 401 o 403 (respondió ${status})`,
+    > 70 |       ).toBe(true);
+         |         ^
+      71 |     },
+      72 |   );
+      73 | });
+        at /home/runner/work/jardin_azuayo_prueba_qa/jardin_azuayo_prueba_qa/api/tests/accounts.api.spec.ts:70:9
+
+    Error Context: test-results/accounts.api-API-—-autenti-8598a-ción-para-consultar-cuentas-api/error-context.md
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="api/tests/billpay.api.spec.ts" timestamp="2026-11-13T21:22:39.002Z" hostname="api" tests="3" failures="3" skipped="0" time="1.819" errors="0">
+<testcase name="API — reglas de negocio del monto (defectos conocidos) › API CP-010 Rechaza un pago con monto cero (0)" classname="api/tests/billpay.api.spec.ts" time="0.525">
+<properties>
+<property name="AC" value="AC-03, AC-05">
+</property>
+<property name="issue" value="DEF-001">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/billpay.api-API-—-reglas-d-436f5-a-un-pago-con-monto-cero-0--api/error-context.md]]
+]]>
+</system-out>
+<failure message="{&quot;payeeName&quot;:&quot;Empresa Electrica Quito 937606-RPSD&quot;,&quot;amount&quot;:0,&quot;accountId&quot;:62073}" type="expect.toBeGreaterThanOrEqual">
+<![CDATA[  [api] › api/tests/billpay.api.spec.ts:106:5 › API — reglas de negocio del monto (defectos conocidos) › API CP-010 Rechaza un pago con monto cero (0) @negative @known-defect 
+
+    Error: {"payeeName":"Empresa Electrica Quito 937606-RPSD","amount":0,"accountId":62073}
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 400
+    Received:    200
+
+      118 |         const response = await api.billPayRaw(paymentAccount.id, amount, payee);
+      119 |
+    > 120 |         expect(response.status(), await response.text()).toBeGreaterThanOrEqual(400);
+          |                                                          ^
+      121 |         const after = await api.account(paymentAccount.id);
+      122 |         expect(after.balance, 'el saldo no debe cambiar').toBe(paymentAccount.balance);
+      123 |       },
+        at /home/runner/work/jardin_azuayo_prueba_qa/jardin_azuayo_prueba_qa/api/tests/billpay.api.spec.ts:120:58
+
+    Error Context: test-results/billpay.api-API-—-reglas-d-436f5-a-un-pago-con-monto-cero-0--api/error-context.md
+]]>
+</failure>
+</testcase>
+<testcase name="API — reglas de negocio del monto (defectos conocidos) › API CP-011 Rechaza un pago con monto negativo (-50.00)" classname="api/tests/billpay.api.spec.ts" time="0.728">
+<properties>
+<property name="AC" value="AC-03, AC-05">
+</property>
+<property name="issue" value="DEF-001">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/billpay.api-API-—-reglas-d-071af--con-monto-negativo--50-00--api/error-context.md]]
+]]>
+</system-out>
+<failure message="{&quot;payeeName&quot;:&quot;Empresa Electrica Quito 937606-HS65&quot;,&quot;amount&quot;:-50.00,&quot;accountId&quot;:62184}" type="expect.toBeGreaterThanOrEqual">
+<![CDATA[  [api] › api/tests/billpay.api.spec.ts:106:5 › API — reglas de negocio del monto (defectos conocidos) › API CP-011 Rechaza un pago con monto negativo (-50.00) @negative @known-defect 
+
+    Error: {"payeeName":"Empresa Electrica Quito 937606-HS65","amount":-50.00,"accountId":62184}
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 400
+    Received:    200
+
+      118 |         const response = await api.billPayRaw(paymentAccount.id, amount, payee);
+      119 |
+    > 120 |         expect(response.status(), await response.text()).toBeGreaterThanOrEqual(400);
+          |                                                          ^
+      121 |         const after = await api.account(paymentAccount.id);
+      122 |         expect(after.balance, 'el saldo no debe cambiar').toBe(paymentAccount.balance);
+      123 |       },
+        at /home/runner/work/jardin_azuayo_prueba_qa/jardin_azuayo_prueba_qa/api/tests/billpay.api.spec.ts:120:58
+
+    Error Context: test-results/billpay.api-API-—-reglas-d-071af--con-monto-negativo--50-00--api/error-context.md
+]]>
+</failure>
+</testcase>
+<testcase name="API — reglas de negocio del monto (defectos conocidos) › API CP-012 Rechaza un pago que supera el saldo disponible" classname="api/tests/billpay.api.spec.ts" time="0.566">
+<properties>
+<property name="AC" value="AC-05">
+</property>
+<property name="issue" value="DEF-002">
+</property>
+</properties>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/billpay.api-API-—-reglas-d-3e23e--supera-el-saldo-disponible-api/error-context.md]]
+]]>
+</system-out>
+<failure message="{&quot;payeeName&quot;:&quot;Empresa Electrica Quito 937606-ND30&quot;,&quot;amount&quot;:1100.00,&quot;accountId&quot;:62628}" type="expect.toBeGreaterThanOrEqual">
+<![CDATA[  [api] › api/tests/billpay.api.spec.ts:127:3 › API — reglas de negocio del monto (defectos conocidos) › API CP-012 Rechaza un pago que supera el saldo disponible @negative @known-defect 
+
+    Error: {"payeeName":"Empresa Electrica Quito 937606-ND30","amount":1100.00,"accountId":62628}
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 400
+    Received:    200
+
+      140 |       const response = await api.billPayRaw(paymentAccount.id, amount, payee);
+      141 |
+    > 142 |       expect(response.status(), await response.text()).toBeGreaterThanOrEqual(400);
+          |                                                        ^
+      143 |       const after = await api.account(paymentAccount.id);
+      144 |       expect(after.balance, 'la cuenta no debe quedar en sobregiro').toBe(paymentAccount.balance);
+      145 |     },
+        at /home/runner/work/jardin_azuayo_prueba_qa/jardin_azuayo_prueba_qa/api/tests/billpay.api.spec.ts:142:56
+
+    Error Context: test-results/billpay.api-API-—-reglas-d-3e23e--supera-el-saldo-disponible-api/error-context.md
+]]>
+</failure>
+</testcase>
+</testsuite>
+</testsuites>

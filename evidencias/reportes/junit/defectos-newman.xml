@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="ParaBank - Pago de servicios básicos" tests="8" time="0.727">
+  <testsuite name="01-preparacion / Login con usuario válido" id="82d461fd-28b4-4498-a301-4d59859328d2" timestamp="2026-11-13T21:23:09.220Z" tests="3" failures="0" errors="0" time="0.129">
+    <testcase name="HTTP 200" time="0.129" classname="01PreparacionLoginConUsuarioValido"/>
+    <testcase name="Responde JSON" time="0.129" classname="01PreparacionLoginConUsuarioValido"/>
+    <testcase name="Devuelve el cliente con id y nombre" time="0.129" classname="01PreparacionLoginConUsuarioValido"/>
+  </testsuite>
+  <testsuite name="01-preparacion / Listar cuentas del cliente" id="9f786c3c-6d5b-484a-8060-bf6753f07b41" timestamp="2026-11-13T21:23:09.220Z" tests="3" failures="0" errors="0" time="0.091">
+    <testcase name="HTTP 200" time="0.091" classname="01PreparacionListarCuentasDelCliente"/>
+    <testcase name="El cliente tiene al menos una cuenta" time="0.091" classname="01PreparacionListarCuentasDelCliente"/>
+    <testcase name="Todas las cuentas pertenecen al cliente" time="0.091" classname="01PreparacionListarCuentasDelCliente"/>
+  </testsuite>
+  <testsuite name="01-preparacion / Crear cuenta de pago (CHECKING)" id="022accfe-705c-42ab-815e-21930d120c33" timestamp="2026-11-13T21:23:09.220Z" tests="2" failures="0" errors="0" time="0.089">
+    <testcase name="HTTP 200" time="0.089" classname="01PreparacionCrearCuentaDePagoChecking"/>
+    <testcase name="Se crea una cuenta CHECKING del cliente" time="0.089" classname="01PreparacionCrearCuentaDePagoChecking"/>
+  </testsuite>
+  <testsuite name="01-preparacion / Consultar saldo inicial de la cuenta de pago" id="7c8ce54f-bca6-4f76-ab75-0e2d4c823713" timestamp="2026-11-13T21:23:09.220Z" tests="2" failures="0" errors="0" time="0.082">
+    <testcase name="HTTP 200" time="0.082" classname="01PreparacionConsultarSaldoInicialDeLaCuentaDePago"/>
+    <testcase name="La cuenta tiene saldo positivo para pagar" time="0.082" classname="01PreparacionConsultarSaldoInicialDeLaCuentaDePago"/>
+  </testsuite>
+  <testsuite name="04-defectos-conocidos / Rechazar pago con monto cero" id="32685a4f-5681-403e-8a18-c993043bb940" timestamp="2026-11-13T21:23:09.220Z" tests="2" failures="1" errors="0" time="0.085">
+    <testcase name="El servicio rechaza la operación (HTTP 4xx/5xx)" time="0.085" classname="04DefectosConocidosRechazarPagoConMontoCero">
+      <failure type="AssertionFailure" message="expected 200 to be at least 400">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 4bc2eb4d-1fa2-5b0b-a761-8ba703eedcc7.]]>
+        <![CDATA[Collection name: ParaBank - Pago de servicios básicos.]]>
+        <![CDATA[Request name: 04-defectos-conocidos / Rechazar pago con monto cero.]]>
+        <![CDATA[Test description: El servicio rechaza la operación (HTTP 4xx/5xx).]]>
+        <![CDATA[Error message: expected 200 to be at least 400.]]>
+        <![CDATA[Stacktrace: AssertionError: expected 200 to be at least 400
+   at Object.eval sandbox-script.js:1:5).]]>
+      </failure>
+    </testcase>
+    <testcase name="El saldo de la cuenta no cambia" time="0.085" classname="04DefectosConocidosRechazarPagoConMontoCero"/>
+  </testsuite>
+  <testsuite name="04-defectos-conocidos / Rechazar pago con monto negativo" id="65dfe2b4-876d-4d3d-acf5-af1477ffeaa9" timestamp="2026-11-13T21:23:09.220Z" tests="2" failures="2" errors="0" time="0.083">
+    <testcase name="El servicio rechaza la operación (HTTP 4xx/5xx)" time="0.083" classname="04DefectosConocidosRechazarPagoConMontoNegativo">
+      <failure type="AssertionFailure" message="expected 200 to be at least 400">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 4bc2eb4d-1fa2-5b0b-a761-8ba703eedcc7.]]>
+        <![CDATA[Collection name: ParaBank - Pago de servicios básicos.]]>
+        <![CDATA[Request name: 04-defectos-conocidos / Rechazar pago con monto negativo.]]>
+        <![CDATA[Test description: El servicio rechaza la operación (HTTP 4xx/5xx).]]>
+        <![CDATA[Error message: expected 200 to be at least 400.]]>
+        <![CDATA[Stacktrace: AssertionError: expected 200 to be at least 400
+   at Object.eval sandbox-script.js:1:6).]]>
+      </failure>
+    </testcase>
+    <testcase name="El saldo de la cuenta no cambia" time="0.083" classname="04DefectosConocidosRechazarPagoConMontoNegativo">
+      <failure type="AssertionFailure" message="saldo antes 100, después 150: expected 15000 to deeply equal 10000">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 4bc2eb4d-1fa2-5b0b-a761-8ba703eedcc7.]]>
+        <![CDATA[Collection name: ParaBank - Pago de servicios básicos.]]>
+        <![CDATA[Request name: 04-defectos-conocidos / Rechazar pago con monto negativo.]]>
+        <![CDATA[Test description: El saldo de la cuenta no cambia.]]>
+        <![CDATA[Error message: saldo antes 100, después 150: expected 15000 to deeply equal 10000.]]>
+        <![CDATA[Stacktrace: AssertionError: saldo antes 100, después 150: expected 15000 to deeply equal 10000
+   at Object.eval sandbox-script.js:2:6).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="04-defectos-conocidos / Rechazar pago que supera el saldo" id="be0bf1bf-1fa8-4e1d-ac9b-bc5d51671620" timestamp="2026-11-13T21:23:09.220Z" tests="2" failures="2" errors="0" time="0.083">
+    <testcase name="El servicio rechaza la operación (HTTP 4xx/5xx)" time="0.083" classname="04DefectosConocidosRechazarPagoQueSuperaElSaldo">
+      <failure type="AssertionFailure" message="expected 200 to be at least 400">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 4bc2eb4d-1fa2-5b0b-a761-8ba703eedcc7.]]>
+        <![CDATA[Collection name: ParaBank - Pago de servicios básicos.]]>
+        <![CDATA[Request name: 04-defectos-conocidos / Rechazar pago que supera el saldo.]]>
+        <![CDATA[Test description: El servicio rechaza la operación (HTTP 4xx/5xx).]]>
+        <![CDATA[Error message: expected 200 to be at least 400.]]>
+        <![CDATA[Stacktrace: AssertionError: expected 200 to be at least 400
+   at Object.eval sandbox-script.js:1:7).]]>
+      </failure>
+    </testcase>
+    <testcase name="El saldo de la cuenta no cambia" time="0.083" classname="04DefectosConocidosRechazarPagoQueSuperaElSaldo">
+      <failure type="AssertionFailure" message="saldo antes 150, después -999849: expected -99984900 to deeply equal 15000">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 4bc2eb4d-1fa2-5b0b-a761-8ba703eedcc7.]]>
+        <![CDATA[Collection name: ParaBank - Pago de servicios básicos.]]>
+        <![CDATA[Request name: 04-defectos-conocidos / Rechazar pago que supera el saldo.]]>
+        <![CDATA[Test description: El saldo de la cuenta no cambia.]]>
+        <![CDATA[Error message: saldo antes 150, después -999849: expected -99984900 to deeply equal 15000.]]>
+        <![CDATA[Stacktrace: AssertionError: saldo antes 150, después -999849: expected -99984900 to deeply equal 15000
+   at Object.eval sandbox-script.js:2:7).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="04-defectos-conocidos / Consultar cuentas sin autenticación" id="de856462-4c92-4ff1-bc31-374d5ee55ea7" timestamp="2026-11-13T21:23:09.220Z" tests="1" failures="1" errors="0" time="0.085">
+    <testcase name="El servicio exige autenticación (401/403)" time="0.085" classname="04DefectosConocidosConsultarCuentasSinAutenticacion">
+      <failure type="AssertionFailure" message="expected 200 to be one of [ 401, 403 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 4bc2eb4d-1fa2-5b0b-a761-8ba703eedcc7.]]>
+        <![CDATA[Collection name: ParaBank - Pago de servicios básicos.]]>
+        <![CDATA[Request name: 04-defectos-conocidos / Consultar cuentas sin autenticación.]]>
+        <![CDATA[Test description: El servicio exige autenticación (401/403).]]>
+        <![CDATA[Error message: expected 200 to be one of [ 401, 403 ].]]>
+        <![CDATA[Stacktrace: AssertionError: expected 200 to be one of [ 401, 403 ]
+   at Object.eval sandbox-script.js:1:8).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+</testsuites>

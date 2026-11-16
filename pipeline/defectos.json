@@ -1,0 +1,25 @@
+{
+  "defects": [
+    {
+      "id": "DEF-001",
+      "title": "Se aceptan pagos con monto cero o negativo; el negativo aumenta el saldo",
+      "severity": "Crítica",
+      "cases": ["CP-010", "CP-011"],
+      "postman": ["Rechazar pago con monto cero", "Rechazar pago con monto negativo"]
+    },
+    {
+      "id": "DEF-002",
+      "title": "Se aceptan pagos mayores al saldo disponible (sobregiro sin límite)",
+      "severity": "Alta",
+      "cases": ["CP-012"],
+      "postman": ["Rechazar pago que supera el saldo"]
+    },
+    {
+      "id": "DEF-003",
+      "title": "La API REST entrega datos de cuentas sin autenticación",
+      "severity": "Crítica",
+      "cases": ["CP-021"],
+      "postman": ["Consultar cuentas sin autenticación"]
+    }
+  ]
+}
